@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Çmimet — meso.al</title>
-<meta name="description" content="Mësime nga €6/orë. Pa abonim të detyrueshëm. Shiko paketat dhe kursimet.">
+<title>Çmimet — i cakton mësuesi | meso.al</title>
+<meta name="description" content="Në meso.al çmimin e cakton vetë mësuesi. Pa plane fikse, pa abonim. Ti paguan vetëm mësimet që bën.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,88 +44,102 @@
 </header>
 
 <main>
-
 <section class="pagehead">
   <div class="container center">
     <div class="crumbs" style="justify-content:center"><a href="index.html">Ballina</a> <span>/</span> <span>Çmimet</span></div>
-    <h1 class="h1">Paguan vetëm mësimet që bën</h1>
-    <p class="lead" style="max-width:620px;margin-inline:auto">Pa abonime të detyrueshme dhe pa kosto të fshehura. Çmimin e cakton mësuesi — ti zgjedh sa mësime blen njëherësh.</p>
+    <span class="badge badge-blue">Pa plane · pa abonim</span>
+    <h1 class="h1" style="margin-top:16px">Çmimin e cakton mësuesi, jo ne</h1>
+    <p class="lead" style="max-width:660px;margin-inline:auto">Ne nuk shesim pako standarde. Çdo mësues vendos vetë tarifën për 50 minuta dhe uljet e veta për disa mësime njëherësh. Ti sheh çmimin e saktë te profili dhe paguan vetëm mësimet që bën.</p>
+    <div class="btn-row" style="justify-content:center;margin-top:28px">
+      <a class="btn btn-primary btn-lg" href="mesues.html">Shiko çmimet e mësuesve</a>
+    </div>
   </div>
 </section>
 
+<!-- Çmimet reale, të llogaritura nga profilet -->
 <section class="section-sm">
   <div class="container">
-    <div class="grid g-3 reveal" style="align-items:stretch">
-
-      <div class="plan">
-        <span class="badge badge-blue" style="align-self:flex-start">Për të filluar</span>
-        <h3 class="h3" style="margin-top:14px">Mësim provë</h3>
-        <p class="small" style="margin-top:6px">Njihu me mësuesin pa u zotuar për asgjë.</p>
-        <div class="amount" style="margin-top:20px">€6<small>/50 min</small></div>
-        <ul>
-          <li>Një mësim me mësuesin që zgjedh</li>
-          <li>Vlerësim i nivelit tënd</li>
-          <li>Plan mësimi i personalizuar</li>
-          <li>Ndërrim mësuesi falas nëse s'të pëlqen</li>
-          <li class="off">Ulje çmimi</li>
-        </ul>
-        <a class="btn btn-ghost btn-block" style="margin-top:auto" href="mesues.html">Zgjidh mësuesin</a>
-      </div>
-
-      <div class="plan is-featured">
-        <span class="badge badge-amber" style="align-self:flex-start">Më e zgjedhura</span>
-        <h3 class="h3" style="margin-top:14px">Paketa 10 mësime</h3>
-        <p class="small" style="margin-top:6px">Ritmi ideal për përparim të dukshëm brenda dy muajsh.</p>
-        <div class="amount" style="margin-top:20px">€81<small> gjithsej</small></div>
-        <p class="tiny">≈ €8,10 për mësim · kursen 10%</p>
-        <ul>
-          <li>10 mësime nga 50 minuta</li>
-          <li>Ulje 10% ndaj çmimit normal</li>
-          <li>Materiale dhe detyra të personalizuara</li>
-          <li>Raport progresi çdo muaj</li>
-          <li>Vlefshmëri 6 muaj</li>
-        </ul>
-        <a class="btn btn-primary btn-block" style="margin-top:auto" href="mesues.html">Fillo tani</a>
-      </div>
-
-      <div class="plan">
-        <span class="badge badge-green" style="align-self:flex-start">Për objektiva serioze</span>
-        <h3 class="h3" style="margin-top:14px">Paketa 20 mësime</h3>
-        <p class="small" style="margin-top:6px">Për provime si IELTS, Goethe, DELF ose maturën shtetërore.</p>
-        <div class="amount" style="margin-top:20px">€153<small> gjithsej</small></div>
-        <p class="tiny">≈ €7,65 për mësim · kursen 15%</p>
-        <ul>
-          <li>20 mësime nga 50 minuta</li>
-          <li>Ulje 15% ndaj çmimit normal</li>
-          <li>Plan i plotë përgatitjeje për provim</li>
-          <li>Prioritet në oraret e mësuesit</li>
-          <li>Vlefshmëri 12 muaj</li>
-        </ul>
-        <a class="btn btn-ghost btn-block" style="margin-top:auto" href="mesues.html">Fillo tani</a>
-      </div>
-    </div>
-
-    <p class="center small" style="margin-top:26px">Çmimet e mësipërme janë llogaritur me tarifën mesatare €9/orë. Çmimi real varet nga mësuesi që zgjedh.</p>
+    <div class="grid g-4 reveal" id="stat-cmimet"></div>
+    <p class="center tiny" style="margin-top:16px">Llogaritur drejtpërdrejt nga profilet aktive në platformë.</p>
   </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Si funksionon</span>
+      <h2 class="h2">Tre gjëra që duhet të dish</h2>
+    </div>
+    <div class="grid g-3 reveal">
+      <div class="card feature"><div class="ico">🎚️</div><h3>Mësuesi vendos tarifën</h3>
+        <p class="small">Një mësues fillestar mund të kërkojë 5 €/orë, një me 15 vjet përvojë dhe certifikata 20 €. Të dy janë të mirëpritur. Tregu vendos, jo ne.</p></div>
+      <div class="card feature"><div class="ico">🎁</div><h3>Uljet i vendos mësuesi</h3>
+        <p class="small">Disa ofrojnë −20% për 20 mësime, disa nuk ofrojnë fare ulje. Çdo ulje shfaqet e qartë te profili përpara se të paguash.</p></div>
+      <div class="card feature"><div class="ico">🧾</div><h3>Ti paguan vetëm mësimet</h3>
+        <p class="small">Pa tarifë regjistrimi, pa abonim mujor, pa detyrim minimumi. Ndalon kur të duash dhe nuk të kërkohet asgjë më.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Çmimet aktuale sipas lëndës, nga vetë mësuesit -->
 <section class="section section-soft">
   <div class="container">
     <div class="section-head center">
-      <span class="eyebrow">Krahasim</span>
-      <h2 class="h2">Sa kushton sipas lëndës</h2>
-      <p class="lead">Çmime mesatare për 50 minuta mësim 1-me-1 në meso.al.</p>
+      <span class="eyebrow">Çmimet sot</span>
+      <h2 class="h2">Sa kërkojnë mësuesit sipas lëndës</h2>
+      <p class="lead">Këto nuk janë tarifa të caktuara nga meso.al — janë çmimet reale që kanë vendosur vetë mësuesit e regjistruar.</p>
     </div>
     <div class="card" style="padding:0;overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;min-width:520px">
+      <table style="width:100%;border-collapse:collapse;min-width:560px">
         <thead><tr style="background:var(--blue-50)">
           <th style="text-align:left;padding:16px 22px;font-size:14px">Lënda</th>
-          <th style="text-align:left;padding:16px;font-size:14px">Fillestar</th>
-          <th style="text-align:left;padding:16px;font-size:14px">Mesatar</th>
-          <th style="text-align:left;padding:16px;font-size:14px">Përgatitje provimi</th>
+          <th style="text-align:left;padding:16px;font-size:14px">Më i liri</th>
+          <th style="text-align:left;padding:16px;font-size:14px">Mesatarja</th>
+          <th style="text-align:left;padding:16px;font-size:14px">Më i shtrenjti</th>
+          <th style="text-align:left;padding:16px;font-size:14px"></th>
         </tr></thead>
         <tbody id="tab-cmime"></tbody>
       </table>
+    </div>
+  </div>
+</section>
+
+<!-- Shembull konkret nga një mësues -->
+<section class="section">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Shembull</span>
+      <h2 class="h2">Si duket çmimi te një profil real</h2>
+      <p class="lead">Zgjidh një mësues dhe shiko tarifën dhe uljet që ka vendosur vetë ai.</p>
+    </div>
+    <div style="max-width:560px;margin-inline:auto">
+      <div class="field-group">
+        <label for="zgjidh-mesues">Mësuesi</label>
+        <select class="select" id="zgjidh-mesues"></select>
+      </div>
+      <div class="card" id="shembull-cmimi" style="margin-top:8px"></div>
+      <p class="tiny center" style="margin-top:14px">Vini re se uljet ndryshojnë nga mësuesi në mësues — disa nuk ofrojnë fare.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-blue">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Transparencë</span>
+      <h2 class="h2">Ku shkojnë paratë e tua</h2>
+    </div>
+    <div class="grid g-2" style="max-width:900px;margin-inline:auto;align-items:stretch">
+      <div class="card">
+        <h3 class="h3" style="font-size:18px">Ti paguan çmimin e shfaqur</h3>
+        <p class="small" style="margin-top:10px">Asnjë tarifë shtesë, asnjë komision i fshehur mbi çmimin e mësuesit. Ajo që sheh te profili është ajo që të hiqet nga karta.</p>
+        <div class="note" style="margin-top:16px">Shembull: mësuesi ka vendosur 10 € → ti paguan <b>10 €</b>.</div>
+      </div>
+      <div class="card">
+        <h3 class="h3" style="font-size:18px">Komisionin e mban platforma</h3>
+        <p class="small" style="margin-top:10px">Komisioni zbritet nga pjesa e mësuesit, jo shtohet mbi çmimin tënd. Ai fillon në 18% dhe ulet deri në 12% për mësuesit me shumë orë.</p>
+        <div class="note" style="margin-top:16px">Nga 10 €: mësuesi merr <b>8,20 €</b>, platforma <b>1,80 €</b>.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -134,10 +148,12 @@
   <div class="container container-sm">
     <div class="section-head center"><h2 class="h2">Pyetje për pagesat</h2></div>
     <div class="faq">
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Pse nuk keni një çmim të vetëm për të gjithë? <span class="ind">+</span></button>
+        <div class="faq-a">Sepse mësuesit nuk janë të njëjtë. Një student i vitit të fundit që jep ndihmë me detyrat dhe një profesor me 20 vjet përvojë që përgatit për provime ndërkombëtare nuk mund të kenë të njëjtën tarifë. Duke i lënë ata të vendosin, ti gjen gjithmonë dikë brenda buxhetit tënd.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">A ndryshon çmimi pasi kam filluar? <span class="ind">+</span></button>
+        <div class="faq-a">Mësuesi mund ta ndryshojë tarifën e vet, por për ty çmimi mbetet i njëjti për 30 ditë nga mësimi i fundit. Nëse rritet, njoftohesh me email përpara rezervimit të radhës dhe vendos vetë nëse vazhdon.</div></div>
       <div class="faq-item"><button class="faq-q" aria-expanded="false">Si mund të paguaj? <span class="ind">+</span></button>
-        <div class="faq-a">Me kartë Visa ose Mastercard, si dhe me transfertë bankare nga bankat në Shqipëri dhe Kosovë. Të gjitha pagesat kalojnë përmes një procesori të certifikuar — meso.al nuk ruan të dhënat e kartës sate.</div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">A ka komision meso.al? <span class="ind">+</span></button>
-        <div class="faq-a">Për nxënësin nuk ka asnjë tarifë shtesë — paguan saktësisht çmimin e shfaqur. Komisionin e mban platforma nga pjesa e mësuesit dhe ai fillon nga 18% e zbret sa më shumë orë të zhvillojë mësuesi.</div></div>
+        <div class="faq-a">Me kartë Visa ose Mastercard, si dhe me transfertë bankare nga bankat në Shqipëri e Kosovë. Për nxënësit në diasporë pranohen kartat evropiane, britanike dhe amerikane. Çmimet mund t'i shohësh në euro, franga, dollarë, paund ose lekë — zgjedhësi ndodhet në fund të faqes.</div></div>
       <div class="faq-item"><button class="faq-q" aria-expanded="false">A mund t'i kthej paratë? <span class="ind">+</span></button>
         <div class="faq-a">Po. Mësimet e papërdorura nga një paketë rimbursohen brenda 30 ditësh nga blerja. Mësimi provë rimbursohet i plotë nëse nuk ke qenë i kënaqur dhe na shkruan brenda 24 orësh.</div></div>
       <div class="faq-item"><button class="faq-q" aria-expanded="false">A lëshoni faturë? <span class="ind">+</span></button>
@@ -149,8 +165,8 @@
 <section class="section section-sm">
   <div class="container"><div class="cta-band">
     <div style="position:relative;max-width:620px">
-      <h2>Fillo me një mësim provë</h2>
-      <p>Pa abonim, pa detyrime. Zgjidh mësuesin, provo një orë dhe vendos më pas.</p>
+      <h2>Gjej dikë brenda buxhetit tënd</h2>
+      <p>Filtro mësuesit sipas çmimit maksimal që dëshiron të paguash dhe fillo me një mësim provë.</p>
       <div class="btn-row" style="margin-top:28px">
         <a class="btn btn-white btn-lg" href="mesues.html">Shiko mësuesit</a>
       </div>
@@ -204,21 +220,72 @@
 <script src="assets/js/tutors.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-var cm = [
-  ["🇬🇧 Anglisht","€6–8","€8–11","€12–18"],
-  ["🇩🇪 Gjermanisht","€7–9","€9–13","€14–20"],
-  ["🇮🇹 Italisht","€6–8","€7–10","€11–15"],
-  ["📐 Matematikë","€6–8","€8–10","€10–14"],
-  ["⚛️ Fizikë","€7–9","€8–11","€11–15"],
-  ["💻 Informatikë","€10–14","€14–18","€18–25"]
-];
-document.getElementById("tab-cmime").innerHTML = cm.map(function (r, i) {
-  return '<tr style="border-top:1px solid var(--line)">' +
-    '<td style="padding:16px 22px;font-weight:650">' + r[0] + '</td>' +
-    '<td style="padding:16px">' + r[1] + '</td>' +
-    '<td style="padding:16px">' + r[2] + '</td>' +
-    '<td style="padding:16px">' + r[3] + '</td></tr>';
-}).join("");
+(function () {
+  var cm = MesoUI.cmim;
+  var lista = MESO_TUTORS;
+
+  /* --- Statistika reale nga profilet --- */
+  var cmimet = lista.map(function (t) { return t.cmim; }).sort(function (a, b) { return a - b; });
+  var mes = cmimet.reduce(function (a, b) { return a + b; }, 0) / cmimet.length;
+  var stat = [
+    [cm(cmimet[0]), "çmimi më i ulët"],
+    [cm(Math.round(mes)), "mesatarja"],
+    [cm(cmimet[cmimet.length - 1]), "çmimi më i lartë"],
+    ["0", "tarifa nga platforma"]
+  ];
+  document.getElementById("stat-cmimet").innerHTML = stat.map(function (r) {
+    return '<div class="card center"><div class="price" style="color:var(--blue-600)">' + r[0] +
+           '</div><p class="small">' + r[1] + "</p></div>";
+  }).join("");
+
+  /* --- Tabela sipas lëndës, nga çmimet e vendosura nga mësuesit --- */
+  document.getElementById("tab-cmime").innerHTML = MESO_LENDET.map(function (l) {
+    var m = lista.filter(function (t) { return t.lenda === l.key; });
+    if (!m.length) return "";
+    var c = m.map(function (t) { return t.cmim; }).sort(function (a, b) { return a - b; });
+    var mj = Math.round(c.reduce(function (a, b) { return a + b; }, 0) / c.length);
+    return '<tr style="border-top:1px solid var(--line)">' +
+      '<td style="padding:16px 22px;font-weight:650">' + l.ikona + " " + l.emer + "</td>" +
+      '<td style="padding:16px">' + cm(c[0]) + "</td>" +
+      '<td style="padding:16px"><b>' + cm(mj) + "</b></td>" +
+      '<td style="padding:16px">' + cm(c[c.length - 1]) + "</td>" +
+      '<td style="padding:16px"><a href="mesues.html?lenda=' + l.key + '">Shiko →</a></td></tr>';
+  }).join("");
+
+  /* --- Shembull i gjallë nga profili i një mësuesi --- */
+  var sel = document.getElementById("zgjidh-mesues");
+  sel.innerHTML = lista.map(function (t) {
+    return '<option value="' + t.id + '">' + t.emri + " — " + t.lendaEmer + "</option>";
+  }).join("");
+
+  function vizato() {
+    var t = lista.filter(function (x) { return x.id === sel.value; })[0];
+    var rreshta = [
+      ["1 mësim", t.cmim, 0],
+      ["5 mësime", t.cmim * 5, t.ulje.p5],
+      ["10 mësime", t.cmim * 10, t.ulje.p10],
+      ["20 mësime", t.cmim * 20, t.ulje.p20]
+    ];
+    document.getElementById("shembull-cmimi").innerHTML =
+      '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' +
+        '<div class="avatar ' + t.av + '">' + t.nofka + "</div>" +
+        "<div><b>" + t.emri + "</b><div class=\"small\">" + t.lendaEmer +
+        " · tarifë e vendosur nga mësuesi: <b>" + cm(t.cmim) + "</b> / 50 min</div></div></div>" +
+      rreshta.map(function (r) {
+        var fund = Math.round(r[1] * (100 - r[2]) / 100);
+        return '<div style="display:flex;justify-content:space-between;align-items:center;' +
+          'padding:11px 0;border-top:1px solid var(--line-2)">' +
+          "<span>" + r[0] + (r[2] ? ' <span class="badge badge-green">−' + r[2] + "%</span>" : "") + "</span>" +
+          "<b>" + cm(fund) + "</b></div>";
+      }).join("") +
+      (t.ulje.p5 || t.ulje.p10 || t.ulje.p20
+        ? ""
+        : '<p class="tiny" style="margin-top:12px">Ky mësues nuk ofron ulje për paketa.</p>');
+  }
+
+  sel.addEventListener("change", vizato);
+  vizato();
+})();
 </script>
 </body>
 </html>

@@ -74,6 +74,28 @@
 window.MesoUI = (function () {
   "use strict";
 
+  /* ---------- Monedha e zgjedhur nga vizitori ---------- */
+  var KYC = "meso-monedha";
+
+  function monedha() {
+    var kod = null;
+    try { kod = localStorage.getItem(KYC); } catch (e) {}
+    var lista = window.MESO_MONEDHAT || [{ kod: "EUR", shenje: "€", kurs: 1 }];
+    return lista.filter(function (m) { return m.kod === kod; })[0] || lista[0];
+  }
+
+  function vendosMonedhen(kod) {
+    try { localStorage.setItem(KYC, kod); } catch (e) {}
+    location.reload();
+  }
+
+  /** Kthen çmimin e mësuesit (në euro) në monedhën e zgjedhur */
+  function cmim(euro) {
+    var m = monedha();
+    var v = euro * m.kurs;
+    return m.shenje + (m.kod === "ALL" ? Math.round(v / 10) * 10 : Math.round(v));
+  }
+
   function yll(n) {
     return '<span class="star">★</span> <b>' + n.toFixed(1) + "</b>";
   }
@@ -103,7 +125,7 @@ window.MesoUI = (function () {
           return '<span class="badge badge-outline">' + x + "</span>";
         }).join("") + "</div>" +
         '<div class="foot">' +
-          '<div><div class="price">€' + t.cmim + '<small>/orë</small></div>' +
+          '<div><div class="price">' + cmim(t.cmim) + '<small>/orë</small></div>' +
             '<div class="tiny">' + t.mesime.toLocaleString("de-DE") + " mësime</div></div>" +
           '<a class="btn btn-primary btn-sm" href="profili.html?id=' + t.id + '">Shiko profilin</a>' +
         "</div>" +
@@ -133,6 +155,8 @@ window.MesoUI = (function () {
             "<span>🗣️ " + t.gjuhe.length + " gjuhë</span>" +
             "<span>🎓 " + t.mesime.toLocaleString("de-DE") + " mësime</span>" +
           "</div>" +
+          (t.nxenesitNga ? '<div class="small" style="margin-top:8px">🌍 Nxënës nga: ' +
+            t.nxenesitNga.join(" · ") + "</div>" : "") +
           '<p class="tutor-bio">' + t.bio + "</p>" +
           '<div class="chip-row" style="margin-top:14px">' +
             t.tags.map(function (x) { return '<span class="badge badge-blue">' + x + "</span>"; }).join("") +
@@ -141,7 +165,7 @@ window.MesoUI = (function () {
         '<div class="tutor-side">' +
           '<div class="rate" style="font-size:16px">' + yll(t.rating) +
             ' <span class="small" style="font-weight:400">(' + t.komente + " komente)</span></div>" +
-          '<div class="price">€' + t.cmim + '<small> / 50 min</small></div>' +
+          '<div class="price">' + cmim(t.cmim) + '<small> / 50 min</small></div>' +
           '<a class="btn btn-primary btn-block" href="profili.html?id=' + t.id + '">Rezervo mësim</a>' +
           '<a class="btn btn-ghost btn-block btn-sm" href="profili.html?id=' + t.id + '">Dërgo mesazh</a>' +
         "</div>" +
@@ -153,5 +177,38 @@ window.MesoUI = (function () {
     return s.length > n ? s.slice(0, n).replace(/\s+\S*$/, "") + "…" : s;
   }
 
-  return { kartëMini: kartëMini, kartëPlotë: kartëPlotë, yll: yll, shkurto: shkurto };
+  return { kartëMini: kartëMini, kartëPlotë: kartëPlotë, yll: yll, shkurto: shkurto,
+           cmim: cmim, monedha: monedha, vendosMonedhen: vendosMonedhen };
+})();
+
+/* ==========================================================================
+   Zgjedhësi i monedhës — shtohet automatikisht në footer-in e çdo faqeje.
+   Duhet të ekzekutohet PAS përkufizimit të MesoUI.
+   ========================================================================== */
+(function () {
+  "use strict";
+  var fb = document.querySelector(".footer-bottom");
+  if (!window.MESO_MONEDHAT || !window.MesoUI) return;
+
+  /* Çmimet e shkruara direkt në HTML: <span data-cmim="10"> */
+  document.querySelectorAll("[data-cmim]").forEach(function (el) {
+    el.insertAdjacentHTML("afterbegin", window.MesoUI.cmim(+el.dataset.cmim));
+  });
+
+  var akt = window.MesoUI.monedha();
+  var wrap = document.createElement("span");
+  wrap.style.cssText = "display:flex;align-items:center;gap:8px";
+  wrap.innerHTML = '<label for="monedha-sel">Monedha:</label>' +
+    '<select id="monedha-sel" style="background:rgba(255,255,255,.1);color:#fff;' +
+    'border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:5px 9px;font-size:13px">' +
+    window.MESO_MONEDHAT.map(function (m) {
+      return '<option value="' + m.kod + '"' + (m.kod === akt.kod ? " selected" : "") +
+             ">" + m.kod + " — " + m.emer + "</option>";
+    }).join("") + "</select>";
+  if (!fb) return;
+  fb.appendChild(wrap);
+
+  wrap.querySelector("select").addEventListener("change", function () {
+    window.MesoUI.vendosMonedhen(this.value);
+  });
 })();

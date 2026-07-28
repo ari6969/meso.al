@@ -117,7 +117,9 @@
     for (var d = 0; d < 7; d++) {
       var i = r * 7 + d;
       var free = (i * 7 + t.emri.length) % 3 !== 0 && !(d === 6 && r > 1);
-      slots += '<div class="slot' + (free ? " free" : "") + '">' + (free ? oret[(i + t.cmim) % oret.length] : "—") + "</div>";
+      slots += '<div class="slot' + (free ? " free" : "") + '"' +
+        (free ? ' data-ore="' + oret[(i + t.cmim) % oret.length] + '"' : "") + '>' +
+        (free ? oret[(i + t.cmim) % oret.length] : "—") + "</div>";
     }
   }
 
@@ -147,6 +149,7 @@
             '<span>🎓 <i>' + t.mesime.toLocaleString("de-DE") + '</i> mësime</span>' +
             '<span>⚡ Përgjigjet brenda <i>2 orësh</i></span>' +
             '<span>🗣️ Flet <i>' + t.gjuhe.length + '</i> gjuhë</span>' +
+            (t.nxenesitNga ? '<span>🌍 Nxënës nga <i>' + t.nxenesitNga.join(', ') + '</i></span>' : '') +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -197,7 +200,13 @@
 
       '<div style="margin-top:36px">' +
         '<h2 class="h3">Orari i lirë</h2>' +
-        '<p class="small" style="margin:8px 0 18px">Orët e theksuara janë të lira. Orari shfaqet në kohën e Tiranës (CET).</p>' +
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 18px">' +
+          '<span class="small">Orët e theksuara janë të lira. Shfaqi në orën e:</span>' +
+          '<select class="select" id="zona-sel" style="width:auto;height:38px;font-size:14px">' +
+            MESO_ZONAT.map(function (z, i) {
+              return '<option value="' + z.ofset + '">' + z.emer + '</option>';
+            }).join("") + '</select>' +
+        '</div>' +
         '<div class="card">' +
           '<div class="slot-grid" style="margin-bottom:8px">' + dite.map(function (d) {
             return '<div class="d">' + d + "</div>"; }).join("") + '</div>' +
@@ -236,7 +245,7 @@
     '<aside>' +
       '<div class="booking-card">' +
         '<div style="display:flex;align-items:baseline;justify-content:space-between">' +
-          '<div class="price">€' + t.cmim + '<small> / 50 min</small></div>' +
+          '<div class="price">' + MesoUI.cmim(t.cmim) + '<small> / 50 min</small></div>' +
           '<span class="rate">' + MesoUI.yll(t.rating) + '</span>' +
         '</div>' +
         (t.provë ? '<div class="badge badge-green" style="margin-top:12px">🎯 Mësim provë me €' + Math.max(3, t.cmim - 3) + '</div>' : "") +
@@ -255,13 +264,21 @@
           (t.online ? '<span style="color:var(--green);font-weight:650">Online tani</span>' : "I disponueshëm sot") + '</div>' +
       '</div>' +
 
-      '<div class="card" style="margin-top:20px">' +
-        '<h3 style="font-size:16px;margin-bottom:14px">Paketa mësimesh</h3>' +
+            '<div class="card" style="margin-top:20px">' +
+        '<h3 style="font-size:16px;margin-bottom:6px">Paketa nga ky mësues</h3>' +
+        '<p class="tiny" style="margin-bottom:14px">Uljet i cakton vetë ' + t.emri.split(" ")[0] + ', jo platforma.</p>' +
         '<div style="display:flex;flex-direction:column;gap:10px">' +
-          '<div style="display:flex;justify-content:space-between;font-size:14.5px"><span>5 mësime</span><b>€' + (t.cmim * 5 - 2) + '</b></div>' +
-          '<div style="display:flex;justify-content:space-between;font-size:14.5px"><span>10 mësime <span class="badge badge-green">−10%</span></span><b>€' + Math.round(t.cmim * 10 * .9) + '</b></div>' +
-          '<div style="display:flex;justify-content:space-between;font-size:14.5px"><span>20 mësime <span class="badge badge-green">−15%</span></span><b>€' + Math.round(t.cmim * 20 * .85) + '</b></div>' +
+          [[5, t.ulje.p5], [10, t.ulje.p10], [20, t.ulje.p20]].map(function (r) {
+            var plot = t.cmim * r[0];
+            var fund = Math.round(plot * (100 - r[1]) / 100);
+            return '<div style="display:flex;justify-content:space-between;align-items:center;font-size:14.5px">' +
+              '<span>' + r[0] + ' mësime' +
+              (r[1] ? ' <span class="badge badge-green">−' + r[1] + '%</span>' : '') + '</span>' +
+              '<b>' + MesoUI.cmim(fund) + '</b></div>';
+          }).join("") +
         '</div>' +
+        (t.ulje.p5 || t.ulje.p10 || t.ulje.p20 ? '' :
+          '<p class="tiny" style="margin-top:12px">Ky mësues nuk ofron ulje për paketa.</p>') +
       '</div>' +
     '</aside>' +
   '</div></section>' +
@@ -270,6 +287,19 @@
     '<div class="section-head"><h2 class="h2">Mësues të tjerë që mund të të pëlqejnë</h2></div>' +
     '<div class="grid g-3">' + tjeret.map(MesoUI.kartëMini).join("") + '</div>' +
   '</div></section>';
+
+  /* --- Zhvendosja e orarit sipas zonës kohore të vizitorit --- */
+  var zonaSel = document.getElementById("zona-sel");
+  if (zonaSel) {
+    zonaSel.addEventListener("change", function () {
+      var ofset = +this.value;
+      document.querySelectorAll(".slot[data-ore]").forEach(function (el) {
+        var baza = el.dataset.ore.split(":");
+        var ore = (((+baza[0] + ofset) % 24) + 24) % 24;
+        el.textContent = (ore < 10 ? "0" : "") + ore + ":" + baza[1];
+      });
+    });
+  }
 })();
 </script>
 </body>
