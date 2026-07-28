@@ -36,6 +36,7 @@
     <a href="behu-mesues.html">Bëhu mësues</a>
     <a href="rreth-nesh.html">Rreth nesh</a>
     <a href="kontakt.html">Kontakt</a>
+    <a href="llogaria.html">Llogaria ime</a>
     <div class="btn-row">
       <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
       <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
@@ -71,7 +72,7 @@
           <button class="chip is-active" type="button" data-rol="nxenes">Jam nxënës</button>
           <button class="chip" type="button" data-rol="mesues">Jam mësues</button>
         </div>
-        <form data-demo-form="Llogaria u krijua (demo). Kjo faqe është një prototip — të dhënat nuk ruhen askund.">
+        <form id="forma-regjistrim">
           <div class="grid g-2" style="gap:0 16px">
             <div class="field-group"><label for="r-emri">Emri</label><input class="input" id="r-emri" required placeholder="Emri"></div>
             <div class="field-group"><label for="r-mbiemri">Mbiemri</label><input class="input" id="r-mbiemri" required placeholder="Mbiemri"></div>
@@ -93,8 +94,8 @@
           <div class="note hide" data-form-msg style="margin-top:18px"></div>
           <div class="divider-txt">ose vazhdo me</div>
           <div class="btn-row" style="flex-wrap:nowrap">
-            <button type="button" class="btn btn-ghost" style="flex:1">Google</button>
-            <button type="button" class="btn btn-ghost" style="flex:1">Facebook</button>
+            <button type="button" class="btn btn-ghost" style="flex:1" data-oauth="google">Google</button>
+            <button type="button" class="btn btn-ghost" style="flex:1" data-oauth="facebook">Facebook</button>
           </div>
           <p class="form-note center" style="margin-top:22px">Ke tashmë llogari? <a href="hyr.html">Hyr këtu</a></p>
         </form>
@@ -134,6 +135,7 @@
         <li><a href="behu-mesues.html">Karriera</a></li>
       </ul></div>
       <div><h4>Ndihmë</h4><ul>
+        <li><a href="llogaria.html">Llogaria ime</a></li>
         <li><a href="kontakt.html">Qendra e ndihmës</a></li>
         <li><a href="kushtet.html">Kushtet e përdorimit</a></li>
         <li><a href="kushtet.html#privatesia">Privatësia</a></li>
@@ -146,8 +148,11 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/config.js"></script>
 <script src="assets/js/tutors.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/db.js"></script>
 <style>@media(max-width:820px){#auth-grid{grid-template-columns:1fr !important;gap:32px !important}}</style>
 <script>
 document.querySelectorAll("[data-rol]").forEach(function (b) {
@@ -160,6 +165,59 @@ document.querySelectorAll("[data-rol]").forEach(function (b) {
       eshteMesues ? "Vazhdo te aplikimi për mësues" : "Krijo llogarinë falas";
   });
 });
+</script>
+<script>
+(function () {
+  var forma = document.getElementById("forma-regjistrim");
+  var kuti  = forma.querySelector("[data-form-msg]");
+  var btn   = forma.querySelector("button[type=submit]");
+
+  function trego(tekst, gabim) {
+    kuti.textContent = tekst;
+    kuti.classList.remove("hide");
+    kuti.style.background = gabim ? "#FDECEC" : "";
+    kuti.style.borderColor = gabim ? "#F5B5B7" : "";
+    kuti.style.color = gabim ? "#9F1F27" : "";
+  }
+
+  if (!MesoDB.online()) {
+    trego("Supabase nuk është konfiguruar ende — plotëso assets/js/config.js që regjistrimi të funksionojë.");
+  }
+
+  forma.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!MesoDB.online()) { trego("Regjistrimi kërkon konfigurimin e Supabase.", true); return; }
+
+    var roliBtn = document.querySelector("[data-rol].is-active");
+    var roli = roliBtn && roliBtn.dataset.rol === "mesues" ? "mesues" : "nxenes";
+
+    btn.disabled = true; btn.textContent = "Po krijohet…";
+    MesoDB.regjistrohu(
+      document.getElementById("r-email").value,
+      document.getElementById("r-pass").value,
+      {
+        roli: roli,
+        emri: document.getElementById("r-emri").value,
+        mbiemri: document.getElementById("r-mbiemri").value
+      }
+    ).then(function (r) {
+      if (r.error) throw r.error;
+      if (r.data.session) { location.href = "llogaria.html"; return; }
+      trego("Llogaria u krijua. Kontrollo emailin për ta konfirmuar adresën, pastaj hyr.");
+      btn.disabled = false; btn.textContent = "Krijo llogarinë falas";
+    }).catch(function (err) {
+      trego("Gabim: " + err.message, true);
+      btn.disabled = false; btn.textContent = "Krijo llogarinë falas";
+    });
+  });
+
+  document.querySelectorAll("[data-oauth]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (!MesoDB.online()) { trego("Regjistrimi me " + b.dataset.oauth + " kërkon konfigurimin e Supabase.", true); return; }
+      MesoDB.hyrMe(b.dataset.oauth).catch(function (e) { trego("Gabim: " + e.message, true); });
+    });
+  });
+})();
 </script>
 </body>
 </html>

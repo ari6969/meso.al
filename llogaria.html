@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Llogaria ime — meso.al</title>
+<meta name="description" content="Paneli yt në meso.al: mësimet, profili dhe çmimi që cakton vetë.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">m</span><span>meso<em>.al</em></span></a>
+    <nav class="nav-links" aria-label="Kryesore">
+      <a href="mesues.html">Gjej mësues</a>
+      <a href="si-funksionon.html">Si funksionon</a>
+      <a href="cmimet.html">Çmimet</a>
+      <a href="behu-mesues.html">Bëhu mësues</a>
+      <a href="rreth-nesh.html">Rreth nesh</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
+      <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
+      <button class="nav-burger" data-burger aria-label="Hap menunë" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+  <div class="container mobile-menu" data-mobile-menu>
+    <a href="mesues.html">Gjej mësues</a>
+    <a href="si-funksionon.html">Si funksionon</a>
+    <a href="cmimet.html">Çmimet</a>
+    <a href="behu-mesues.html">Bëhu mësues</a>
+    <a href="rreth-nesh.html">Rreth nesh</a>
+    <a href="kontakt.html">Kontakt</a>
+    <a href="llogaria.html">Llogaria ime</a>
+    <div class="btn-row">
+      <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
+      <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="pagehead">
+  <div class="container">
+    <div class="crumbs"><a href="index.html">Ballina</a> <span>/</span> <span>Llogaria ime</span></div>
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <div class="avatar avatar-lg av-1" id="pa-avatar">?</div>
+      <div style="flex:1;min-width:220px">
+        <h1 class="h2" id="pa-emri">Llogaria ime</h1>
+        <p class="lead" id="pa-roli" style="margin-top:4px">Po ngarkohet…</p>
+      </div>
+      <button class="btn btn-ghost" id="btn-dil">Dil nga llogaria</button>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+
+    <div class="note hide" id="pa-lajm" style="margin-bottom:24px"></div>
+
+    <!-- Paneli i mësuesit -->
+    <div id="paneli-mesues" class="hide">
+      <div class="grid" style="grid-template-columns:1fr 380px;gap:32px;align-items:start" id="grid-mesues">
+        <div>
+          <h2 class="h3">Mësimet e mia</h2>
+          <div id="lista-mesimeve" style="margin-top:16px"></div>
+        </div>
+        <aside class="card">
+          <h3 style="font-size:17px">Çmimi im</h3>
+          <p class="tiny" style="margin:6px 0 18px">Ti e cakton vetë tarifën dhe uljet. Platforma nuk vendos asnjë çmim.</p>
+          <form id="forma-cmimi">
+            <div class="field-group">
+              <label for="c-cmimi">Tarifa për 50 minuta (€)</label>
+              <input class="input" type="number" id="c-cmimi" min="1" max="200" step="0.5" required>
+            </div>
+            <div class="grid g-3" style="gap:0 10px">
+              <div class="field-group"><label for="c-u5">−% për 5</label>
+                <input class="input" type="number" id="c-u5" min="0" max="50" value="0"></div>
+              <div class="field-group"><label for="c-u10">−% për 10</label>
+                <input class="input" type="number" id="c-u10" min="0" max="50" value="0"></div>
+              <div class="field-group"><label for="c-u20">−% për 20</label>
+                <input class="input" type="number" id="c-u20" min="0" max="50" value="0"></div>
+            </div>
+            <div class="note" id="c-parashikim" style="margin-bottom:16px"></div>
+            <button class="btn btn-primary btn-block" type="submit">Ruaj çmimin</button>
+            <div class="tiny center hide" id="c-msg" style="margin-top:10px"></div>
+          </form>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Paneli i nxënësit -->
+    <div id="paneli-nxenes" class="hide">
+      <h2 class="h3">Mësimet e mia</h2>
+      <div id="lista-nxenesit" style="margin-top:16px"></div>
+      <div class="empty hide" id="bosh-nxenes">
+        <div style="font-size:44px">📚</div>
+        <h3 style="margin:12px 0 8px">Ende pa mësime</h3>
+        <p class="small">Gjej një mësues dhe rezervo mësimin tënd të parë provë.</p>
+        <a class="btn btn-primary" style="margin-top:18px" href="mesues.html">Gjej mësues</a>
+      </div>
+    </div>
+
+    <!-- Kur nuk je i kyçur / Supabase s'është konfiguruar -->
+    <div id="paneli-jashte" class="empty hide">
+      <div style="font-size:44px">🔐</div>
+      <h3 style="margin:12px 0 8px" id="jashte-titull">Nuk je i kyçur</h3>
+      <p class="small" id="jashte-tekst">Hyr në llogari për të parë mësimet e tua.</p>
+      <div class="btn-row" style="justify-content:center;margin-top:20px">
+        <a class="btn btn-primary" href="hyr.html">Hyr</a>
+        <a class="btn btn-ghost" href="regjistrohu.html">Regjistrohu</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark">m</span><span>meso<em style="color:#93B7FF">.al</em></span></a>
+        <p style="margin-top:16px;max-width:300px;font-size:14.5px">Platforma shqiptare që lidh nxënësit me mësues privatë online. Mëso çfarë të duash, kur të duash.</p>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="YouTube">yt</a>
+        </div>
+      </div>
+      <div><h4>Mëso</h4><ul>
+        <li><a href="mesues.html?lenda=anglisht">Anglisht</a></li>
+        <li><a href="mesues.html?lenda=gjermanisht">Gjermanisht</a></li>
+        <li><a href="mesues.html?lenda=italisht">Italisht</a></li>
+        <li><a href="mesues.html?lenda=matematike">Matematikë</a></li>
+        <li><a href="mesues.html?lenda=informatike">Informatikë</a></li>
+      </ul></div>
+      <div><h4>Platforma</h4><ul>
+        <li><a href="si-funksionon.html">Si funksionon</a></li>
+        <li><a href="cmimet.html">Çmimet</a></li>
+        <li><a href="mesues.html">Gjej mësues</a></li>
+        <li><a href="behu-mesues.html">Bëhu mësues</a></li>
+      </ul></div>
+      <div><h4>Kompania</h4><ul>
+        <li><a href="rreth-nesh.html">Rreth nesh</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="behu-mesues.html">Karriera</a></li>
+      </ul></div>
+      <div><h4>Ndihmë</h4><ul>
+        <li><a href="llogaria.html">Llogaria ime</a></li>
+        <li><a href="kontakt.html">Qendra e ndihmës</a></li>
+        <li><a href="kushtet.html">Kushtet e përdorimit</a></li>
+        <li><a href="kushtet.html#privatesia">Privatësia</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> meso.al — Të gjitha të drejtat e rezervuara.</span>
+      <span>Bërë me ♥ në Tiranë &amp; Prishtinë</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/tutors.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/db.js"></script>
+<style>@media(max-width:900px){#kontakt-grid{grid-template-columns:1fr !important}}</style>
+<style>@media(max-width:900px){#grid-mesues{grid-template-columns:1fr !important}}</style>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var jashte = $("paneli-jashte");
+
+  function tregoJashte(titull, tekst) {
+    $("jashte-titull").textContent = titull;
+    $("jashte-tekst").textContent = tekst;
+    jashte.classList.remove("hide");
+    $("pa-roli").textContent = "";
+    $("btn-dil").classList.add("hide");
+  }
+
+  if (!MesoDB.online()) {
+    tregoJashte("Supabase nuk është konfiguruar",
+      "Plotëso assets/js/config.js me URL-në e projektit dhe çelësin anon që llogaritë të funksionojnë.");
+    return;
+  }
+
+  $("btn-dil").addEventListener("click", function () { MesoDB.dil(); });
+
+  MesoDB.sesioni().then(function (ses) {
+    if (!ses) { tregoJashte("Nuk je i kyçur", "Hyr në llogari për të parë mësimet e tua."); return; }
+    return MesoDB.profiliIm().then(function (p) {
+      if (!p) { tregoJashte("Profili nuk u gjet", "Provo të dalësh dhe të hysh sërish."); return; }
+
+      $("pa-emri").textContent = (p.emri + " " + (p.mbiemri || "")).trim();
+      $("pa-avatar").textContent = p.nofka || p.emri.slice(0, 2).toUpperCase();
+      $("pa-avatar").className = "avatar avatar-lg " + (p.ngjyra || "av-1");
+      $("pa-roli").textContent = p.roli === "mesues" ? "Mësues" : "Nxënës";
+
+      return p.roli === "mesues" ? nisMesuesin(p) : nisNxenesin(p);
+    });
+  }).catch(function (e) {
+    tregoJashte("Gabim", e.message);
+  });
+
+  /* ---------- Mësuesi ---------- */
+  function nisMesuesin(p) {
+    $("paneli-mesues").classList.remove("hide");
+
+    return MesoDB.mesuesi(p.id).then(function (m) {
+      if (!m) {
+        $("pa-lajm").textContent =
+          "Profili yt i mësuesit është ende në shqyrtim. Sapo të aprovohet, do të shfaqet te kërkimi.";
+        $("pa-lajm").classList.remove("hide");
+      } else {
+        $("c-cmimi").value = m.cmim;
+        $("c-u5").value  = m.ulje.p5;
+        $("c-u10").value = m.ulje.p10;
+        $("c-u20").value = m.ulje.p20;
+      }
+      parashiko();
+      return ngarkoMesimet("lista-mesimeve");
+    });
+  }
+
+  function parashiko() {
+    var c = parseFloat($("c-cmimi").value || 0);
+    var u10 = parseFloat($("c-u10").value || 0);
+    var neto = c * 0.82;   // komisioni fillestar 18%
+    $("c-parashikim").innerHTML =
+      "Nxënësi paguan <b>" + MesoUI.cmim(c) + "</b> për një mësim · ti merr <b>" +
+      MesoUI.cmim(neto) + "</b> pas komisionit 18%.<br>" +
+      "Paketa 10 mësime: nxënësi paguan <b>" + MesoUI.cmim(c * 10 * (100 - u10) / 100) + "</b>.";
+  }
+  ["c-cmimi", "c-u10"].forEach(function (id) {
+    var el = $(id); if (el) el.addEventListener("input", parashiko);
+  });
+
+  var fc = $("forma-cmimi");
+  if (fc) fc.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var msg = $("c-msg");
+    MesoDB.ruajCmimin(Math.round(parseFloat($("c-cmimi").value) * 100), {
+      p5:  parseInt($("c-u5").value  || 0, 10),
+      p10: parseInt($("c-u10").value || 0, 10),
+      p20: parseInt($("c-u20").value || 0, 10)
+    }).then(function (r) {
+      if (r && r.error) throw r.error;
+      msg.textContent = "✅ Çmimi u ruajt.";
+      msg.style.color = "var(--green)";
+      msg.classList.remove("hide");
+    }).catch(function (err) {
+      msg.textContent = "Gabim: " + err.message;
+      msg.style.color = "var(--red)";
+      msg.classList.remove("hide");
+    });
+  });
+
+  /* ---------- Nxënësi ---------- */
+  function nisNxenesin() {
+    $("paneli-nxenes").classList.remove("hide");
+    return ngarkoMesimet("lista-nxenesit", "bosh-nxenes");
+  }
+
+  function ngarkoMesimet(kontejner, boshId) {
+    return MesoDB.rezervimetEMia().then(function (lista) {
+      var el = $(kontejner);
+      if (!lista.length) {
+        if (boshId) $(boshId).classList.remove("hide");
+        else el.innerHTML = '<p class="small">Ende nuk ke mësime të planifikuara.</p>';
+        return;
+      }
+      el.innerHTML = lista.map(function (r) {
+        var d = new Date(r.fillon_utc);
+        var m = r.mesuesit && r.mesuesit.profilet;
+        var ngjyrat = { pritje: "badge-amber", konfirmuar: "badge-blue",
+                        perfunduar: "badge-green", anuluar: "badge-outline", mungese: "badge-outline" };
+        return '<div class="card" style="margin-bottom:12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">' +
+          (m ? '<div class="avatar avatar-sm ' + (m.ngjyra || "av-1") + '">' + (m.nofka || "?") + "</div>" : "") +
+          "<div style=\"flex:1;min-width:180px\">" +
+            "<b>" + (m ? m.emri + " " + (m.mbiemri || "") : "Mësues") + "</b>" +
+            '<div class="small">' + d.toLocaleString("sq-AL", {
+              weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit"
+            }) + "</div></div>" +
+          '<span class="badge ' + (ngjyrat[r.statusi] || "badge-outline") + '">' + r.statusi + "</span>" +
+          '<b>' + MesoUI.cmim(r.cmimi_cent / 100) + "</b>" +
+        "</div>";
+      }).join("");
+    });
+  }
+})();
+</script>
+</body>
+</html>

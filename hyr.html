@@ -36,6 +36,7 @@
     <a href="behu-mesues.html">Bëhu mësues</a>
     <a href="rreth-nesh.html">Rreth nesh</a>
     <a href="kontakt.html">Kontakt</a>
+    <a href="llogaria.html">Llogaria ime</a>
     <div class="btn-row">
       <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
       <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
@@ -59,7 +60,7 @@
       </div>
 
       <div class="card" style="padding:32px;box-shadow:var(--sh-md)">
-        <form data-demo-form="Ky është një demo — nuk ka llogari reale. Shfleto faqet e tjera për të parë platformën.">
+        <form id="forma-hyrje">
           <div class="field-group"><label for="h-email">Email</label>
             <input class="input" type="email" id="h-email" required placeholder="ti@example.com"></div>
           <div class="field-group"><label for="h-pass">Fjalëkalimi</label>
@@ -72,8 +73,8 @@
           <div class="note hide" data-form-msg style="margin-top:18px"></div>
           <div class="divider-txt">ose vazhdo me</div>
           <div class="btn-row" style="flex-wrap:nowrap">
-            <button type="button" class="btn btn-ghost" style="flex:1">Google</button>
-            <button type="button" class="btn btn-ghost" style="flex:1">Facebook</button>
+            <button type="button" class="btn btn-ghost" style="flex:1" data-oauth="google">Google</button>
+            <button type="button" class="btn btn-ghost" style="flex:1" data-oauth="facebook">Facebook</button>
           </div>
           <p class="form-note center" style="margin-top:22px">Nuk ke llogari? <a href="regjistrohu.html">Regjistrohu falas</a></p>
         </form>
@@ -113,6 +114,7 @@
         <li><a href="behu-mesues.html">Karriera</a></li>
       </ul></div>
       <div><h4>Ndihmë</h4><ul>
+        <li><a href="llogaria.html">Llogaria ime</a></li>
         <li><a href="kontakt.html">Qendra e ndihmës</a></li>
         <li><a href="kushtet.html">Kushtet e përdorimit</a></li>
         <li><a href="kushtet.html#privatesia">Privatësia</a></li>
@@ -125,8 +127,57 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/config.js"></script>
 <script src="assets/js/tutors.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/db.js"></script>
 <style>@media(max-width:820px){#auth-grid{grid-template-columns:1fr !important;gap:32px !important}}</style>
+<script>
+(function () {
+  var forma = document.getElementById("forma-hyrje");
+  var kuti  = forma.querySelector("[data-form-msg]");
+  var btn   = forma.querySelector("button[type=submit]");
+
+  function trego(tekst, gabim) {
+    kuti.textContent = tekst;
+    kuti.classList.remove("hide");
+    kuti.style.background = gabim ? "#FDECEC" : "";
+    kuti.style.borderColor = gabim ? "#F5B5B7" : "";
+    kuti.style.color = gabim ? "#9F1F27" : "";
+  }
+
+  if (!MesoDB.online()) {
+    trego("Supabase nuk është konfiguruar ende — plotëso assets/js/config.js që hyrja të funksionojë.");
+  } else {
+    // Nëse je tashmë i kyçur, kalo te llogaria
+    MesoDB.sesioni().then(function (s) { if (s) location.href = "llogaria.html"; });
+  }
+
+  forma.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!MesoDB.online()) { trego("Hyrja kërkon konfigurimin e Supabase.", true); return; }
+    btn.disabled = true; btn.textContent = "Po hyn…";
+    MesoDB.hyr(document.getElementById("h-email").value,
+               document.getElementById("h-pass").value)
+      .then(function (r) {
+        if (r.error) throw r.error;
+        location.href = "llogaria.html";
+      })
+      .catch(function (err) {
+        trego(err.message === "Invalid login credentials"
+          ? "Email ose fjalëkalim i gabuar." : "Gabim: " + err.message, true);
+        btn.disabled = false; btn.textContent = "Hyr";
+      });
+  });
+
+  document.querySelectorAll("[data-oauth]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (!MesoDB.online()) { trego("Hyrja me " + b.dataset.oauth + " kërkon konfigurimin e Supabase.", true); return; }
+      MesoDB.hyrMe(b.dataset.oauth).catch(function (e) { trego("Gabim: " + e.message, true); });
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -70,3 +70,42 @@ E vetmja burim i jashtëm është fonti Inter nga Google Fonts (ka fallback te f
 ---
 
 © meso.al — projekt demonstrues.
+
+---
+
+## Backend (Supabase)
+
+Faqja punon në dy mënyra:
+
+- **Pa konfigurim** — të dhënat vijnë nga `assets/js/tutors.js` (prototip statik)
+- **Me Supabase** — të dhënat, llogaritë dhe rezervimet vijnë nga baza reale
+
+### Ngritja
+
+1. Krijo një projekt **të veçantë** në Supabase (mos e ndaj me projekte të tjera —
+   `auth.users` është i përbashkët për projekt).
+2. SQL Editor → ekzekuto `supabase/01_schema.sql`, pastaj `supabase/02_seed.sql`.
+3. Plotëso `assets/js/config.js` me `Project URL` dhe çelësin **anon**.
+   Kurrë me `service_role` — ai anashkalon Row Level Security.
+4. Authentication → Providers: aktivizo Email (dhe Google/Facebook nëse i do).
+5. Authentication → URL Configuration: shto `https://<user>.github.io/meso.al/`
+   te *Site URL* dhe *Redirect URLs*.
+
+### Skema
+
+| Tabela | Përmbajtja |
+|---|---|
+| `lendet` | Lëndët dhe gjuhët |
+| `profilet` | Të dhënat e përdoruesit; `user_id` NULL = profil demo |
+| `mesuesit` | Çmimi dhe uljet e caktuara **nga vetë mësuesi**, statusi, bio |
+| `disponueshmeria` | Orare të lira, gjithmonë në UTC |
+| `rezervimet` | Mësimet, me çmimin e komisionin si fotografi e momentit |
+| `komentet` | Vlerësimet; rifreskojnë automatikisht mesataren e mësuesit |
+| `mesazhet` | Biseda nxënës–mësues |
+
+Vendime që nuk duhen ndryshuar më vonë: oraret ruhen **në UTC**, çmimet si
+**numra të plotë në cent**, dhe komisioni ruhet te çdo rezervim si vlerë e ngrirë.
+
+Row Level Security është aktive në çdo tabelë: mësuesi përditëson vetëm rreshtin
+e vet, nxënësi sheh vetëm rezervimet e veta, dhe komenti mund të shkruhet vetëm
+pas një mësimi me status `perfunduar`.

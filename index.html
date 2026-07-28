@@ -37,6 +37,7 @@
     <a href="behu-mesues.html">Bëhu mësues</a>
     <a href="rreth-nesh.html">Rreth nesh</a>
     <a href="kontakt.html">Kontakt</a>
+    <a href="llogaria.html">Llogaria ime</a>
     <div class="btn-row">
       <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
       <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
@@ -396,7 +397,8 @@
       <div>
         <h4>Ndihmë</h4>
         <ul>
-          <li><a href="kontakt.html">Qendra e ndihmës</a></li>
+          <li><a href="llogaria.html">Llogaria ime</a></li>
+        <li><a href="kontakt.html">Qendra e ndihmës</a></li>
           <li><a href="kushtet.html">Kushtet e përdorimit</a></li>
           <li><a href="kushtet.html#privatesia">Privatësia</a></li>
         </ul>
@@ -409,8 +411,11 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/config.js"></script>
 <script src="assets/js/tutors.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/db.js"></script>
 <script>
   // Lëndët
   document.getElementById("lendet-grid").innerHTML = window.MESO_LENDET.map(function (l) {
