@@ -12,6 +12,6 @@
    Nëse i lë bosh, faqja punon si prototip me të dhënat nga tutors.js.
    ========================================================================== */
 window.MESO_CONFIG = {
-  SUPABASE_URL: "",
-  SUPABASE_ANON_KEY: ""
+  SUPABASE_URL: "https://gyvjzesgowzhrzuqmlpc.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_I36ONSBY-sv8_GyrZwE5Sw_NKRv-lbt"
 };
