@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>meso.al — Mëso online me mësuesin tënd personal</title>
+<meta name="description" content="meso.al lidh nxënësit shqiptarë me mësues privatë online. Anglisht, gjermanisht, matematikë, informatikë e më shumë — mësime 1-me-1 nga €6/orë.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">m</span>meso<em>.al</em></a>
+    <nav class="nav-links" aria-label="Kryesore">
+      <a href="mesues.html">Gjej mësues</a>
+      <a href="si-funksionon.html">Si funksionon</a>
+      <a href="cmimet.html">Çmimet</a>
+      <a href="behu-mesues.html">Bëhu mësues</a>
+      <a href="rreth-nesh.html">Rreth nesh</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
+      <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
+      <button class="nav-burger" data-burger aria-label="Hap menunë" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+  <div class="container mobile-menu" data-mobile-menu>
+    <a href="mesues.html">Gjej mësues</a>
+    <a href="si-funksionon.html">Si funksionon</a>
+    <a href="cmimet.html">Çmimet</a>
+    <a href="behu-mesues.html">Bëhu mësues</a>
+    <a href="rreth-nesh.html">Rreth nesh</a>
+    <a href="kontakt.html">Kontakt</a>
+    <div class="btn-row">
+      <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
+      <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="badge badge-blue">🇦🇱 Platforma shqiptare e mësimit online</span>
+      <h1 style="margin-top:18px">Mëso çdo lëndë me <em>mësuesin tënd</em> personal</h1>
+      <p class="lead">Mbi 1.700 mësues të verifikuar nga Shqipëria, Kosova dhe diaspora. Mësime 1-me-1 në video, në orarin që të përshtatet ty. Fillo me një mësim provë nga €6.</p>
+
+      <form class="searchbox" data-search-form>
+        <div class="field">
+          <div style="flex:1">
+            <label for="lenda">Çfarë dëshiron të mësosh?</label>
+            <select id="lenda" name="lenda" aria-label="Lënda">
+              <option value="">Të gjitha lëndët</option>
+              <option value="anglisht">Anglisht</option>
+              <option value="gjermanisht">Gjermanisht</option>
+              <option value="italisht">Italisht</option>
+              <option value="frengjisht">Frëngjisht</option>
+              <option value="turqisht">Turqisht</option>
+              <option value="shqip">Gjuhë Shqipe</option>
+              <option value="matematike">Matematikë</option>
+              <option value="fizike">Fizikë</option>
+              <option value="kimi">Kimi</option>
+              <option value="biologji">Biologji</option>
+              <option value="informatike">Informatikë</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <div style="flex:1">
+            <label for="nivel">Niveli yt</label>
+            <select id="nivel" name="nivel" aria-label="Niveli">
+              <option value="">Çdo nivel</option>
+              <option value="fillestar">Fillestar</option>
+              <option value="mesatar">Mesatar</option>
+              <option value="avancuar">I avancuar</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">🔍 Kërko mësues</button>
+      </form>
+
+      <div class="hero-stats">
+        <div><b>1.700+</b><span>mësues aktivë</span></div>
+        <div><b>48.000</b><span>mësime të zhvilluara</span></div>
+        <div><b>4,9 ★</b><span>vlerësim mesatar</span></div>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="hero-float f1">🎯 <span>Mësim provë €6</span></div>
+      <div class="hero-card">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="avatar-wrap">
+            <div class="avatar avatar-lg av-1">EH</div>
+            <span class="avatar-online" style="width:18px;height:18px"></span>
+          </div>
+          <div>
+            <div class="tutor-name"><h3 style="font-size:19px">Elira Hoxha</h3><span>🇬🇧</span></div>
+            <div class="small">Anglisht · IELTS · Tiranë</div>
+            <div class="rate" style="margin-top:6px;font-size:14px"><span class="star">★</span> <b>5.0</b> <span class="small" style="font-weight:400">(214 komente)</span></div>
+          </div>
+        </div>
+        <div class="chip-row" style="margin-top:16px">
+          <span class="badge badge-blue">IELTS</span>
+          <span class="badge badge-blue">Bisedor</span>
+          <span class="badge badge-amber">⚡ Mësues super</span>
+        </div>
+        <hr style="margin:18px 0">
+        <div class="tiny" style="font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">E hënë, 4 Shkurt</div>
+        <div class="slot-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="slot free">09:00</div>
+          <div class="slot">10:00</div>
+          <div class="slot free">17:00</div>
+          <div class="slot free">18:00</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px;gap:12px">
+          <div class="price">€9<small>/orë</small></div>
+          <a class="btn btn-primary btn-sm" href="profili.html?id=elira-hoxha">Rezervo</a>
+        </div>
+      </div>
+      <div class="hero-float f2">✅ <span>Mësues i verifikuar</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BESIMI ================= -->
+<section class="section-sm">
+  <div class="container">
+    <p class="center small" style="margin-bottom:22px">Mësuesit tanë vijnë nga institucione si</p>
+    <div class="logos">
+      <span>Universiteti i Tiranës</span>
+      <span>Universiteti i Prishtinës</span>
+      <span>Politekniku i Tiranës</span>
+      <span>Goethe-Institut</span>
+      <span>Cambridge CELTA</span>
+      <span>Sorbonne</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LËNDËT ================= -->
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Lëndët</span>
+      <h2 class="h2">Çfarë do të mësosh sot?</h2>
+      <p class="lead">Nga gjuhët e huaja te matura shtetërore dhe programimi — gjej mësuesin e duhur për çdo objektiv.</p>
+    </div>
+    <div class="grid g-4 reveal" id="lendet-grid"></div>
+    <div class="center" style="margin-top:36px">
+      <a class="btn btn-ghost" href="mesues.html">Shiko të gjitha lëndët →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MËSUESIT ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Mësuesit</span>
+      <h2 class="h2">Njihu me disa nga mësuesit tanë</h2>
+      <p class="lead">Çdo mësues kalon nëpër verifikim identiteti dhe intervistë përpara se të pranohet në platformë.</p>
+    </div>
+    <div class="grid g-3 reveal" id="mesues-grid"></div>
+    <div class="center" style="margin-top:40px">
+      <a class="btn btn-primary btn-lg" href="mesues.html">Shiko 1.700+ mësues</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SI FUNKSIONON ================= -->
+<section class="section section-blue">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Si funksionon</span>
+      <h2 class="h2">Tri hapa deri te mësimi yt i parë</h2>
+    </div>
+    <div class="grid g-3 reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Gjej mësuesin</h3>
+        <p class="small">Filtro sipas lëndës, çmimit, orarit dhe specializimit. Shiko videot e prezantimit dhe komentet e nxënësve të tjerë.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Rezervo mësimin provë</h3>
+        <p class="small">Zgjidh një orar që të përshtatet dhe paguaj vetëm mësimin e parë. Nëse nuk je i kënaqur, e zëvendësojmë falas.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Mëso dhe përparo</h3>
+        <p class="small">Mësimet zhvillohen në klasën tonë virtuale. Ndiq progresin, merr detyra dhe blej pakot kur je gati.</p>
+      </div>
+    </div>
+    <div class="center" style="margin-top:40px">
+      <a class="btn btn-primary" href="si-funksionon.html">Mëso më shumë</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PSE MESO.AL ================= -->
+<section class="section">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Pse meso.al</span>
+      <h2 class="h2">Ndërtuar për nxënësin shqiptar</h2>
+      <p class="lead">Nuk je thjesht një numër në një platformë ndërkombëtare. Këtu gjithçka është në shqip — nga mësuesi te mbështetja.</p>
+    </div>
+    <div class="grid g-3 reveal">
+      <div class="card feature"><div class="ico">🛡️</div><h3>Mësues të verifikuar</h3><p class="small">Kontrollojmë dokumentet, kualifikimet dhe zhvillojmë një intervistë me çdo mësues përpara aprovimit.</p></div>
+      <div class="card feature"><div class="ico">💶</div><h3>Çmime reale për rajonin</h3><p class="small">Mësime nga €6/orë. Pa abonime të detyrueshme dhe pa kosto të fshehura.</p></div>
+      <div class="card feature"><div class="ico">🕗</div><h3>Orare fleksibël</h3><p class="small">Mëso në mëngjes para punës ose në mbrëmje. Anulo pa pagesë deri 4 orë përpara mësimit.</p></div>
+      <div class="card feature"><div class="ico">🎥</div><h3>Klasa virtuale e integruar</h3><p class="small">Video, dërrasë e bardhë, ndarje ekrani dhe materiale — të gjitha brenda platformës, pa aplikacione shtesë.</p></div>
+      <div class="card feature"><div class="ico">📈</div><h3>Ndjekje progresi</h3><p class="small">Objektiva javore, detyra dhe raporte të thjeshta që tregojnë sa ke përparuar realisht.</p></div>
+      <div class="card feature"><div class="ico">💬</div><h3>Mbështetje në shqip</h3><p class="small">Ekipi ynë përgjigjet brenda 24 orësh, në shqip, çdo ditë të javës.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DËSHMI ================= -->
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Dëshmi</span>
+      <h2 class="h2">Çfarë thonë nxënësit</h2>
+    </div>
+    <div class="grid g-3 reveal">
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>„Kisha vite që e shtyja anglishten. Me Elirën bëra 3 mësime në javë për katër muaj dhe mora 7.5 në IELTS. Vlen çdo lek.”</p>
+        <div class="who"><div class="avatar avatar-sm av-4">MG</div><div><b>Marsel Gjoka</b><span class="small">Tiranë · Anglisht</span></div></div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>„Djali im ishte 4 në matematikë. Pas dy muajsh me profesor Arbenin doli 8 në maturë. Mësimet online funksionuan më mirë se kurset me grup.”</p>
+        <div class="who"><div class="avatar avatar-sm av-2">LB</div><div><b>Lindita Bushati</b><span class="small">Durrës · Prind</span></div></div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>„Më duhej gjermanishtja për kontratën e punës si infermiere. Sara më përgatiti për Goethe B1 dhe e kalova që në provën e parë.”</p>
+        <div class="who"><div class="avatar avatar-sm av-3">EN</div><div><b>Erisa Ndoja</b><span class="small">Shkodër · Gjermanisht</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA MËSUES ================= -->
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div style="position:relative;max-width:640px">
+        <h2>Mëso të tjerët. Fito nga shtëpia.</h2>
+        <p>Bëhu mësues në meso.al, cakto vetë çmimin dhe orarin. Ne sjellim nxënësit, ti bën mësimin. Pagesat çdo javë, direkt në llogarinë tënde.</p>
+        <div class="btn-row" style="margin-top:28px">
+          <a class="btn btn-white btn-lg" href="behu-mesues.html">Apliko si mësues</a>
+          <a class="btn btn-lg" href="si-funksionon.html" style="border-color:rgba(255,255,255,.5);color:#fff">Si funksionon →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section section-soft">
+  <div class="container container-sm">
+    <div class="section-head center">
+      <span class="eyebrow">Pyetje të shpeshta</span>
+      <h2 class="h2">Gjithçka që duhet të dish</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Sa kushton një mësim? <span class="ind">+</span></button>
+        <div class="faq-a">Çmimin e cakton vetë mësuesi. Në meso.al mësimet fillojnë nga €6 për 50 minuta dhe mesatarja është rreth €9. Mësimi provë shpesh ofrohet me çmim të reduktuar. Nuk ka abonim mujor të detyrueshëm — paguan vetëm mësimet që bën.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Si zhvillohen mësimet? <span class="ind">+</span></button>
+        <div class="faq-a">Të gjitha mësimet zhvillohen online, në klasën virtuale të meso.al. Të duhet vetëm një kompjuter ose telefon me internet. Klasa ka video, chat, dërrasë të bardhë dhe mundësi për ndarje ekrani e materialesh.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Po nëse mësuesi nuk më përshtatet? <span class="ind">+</span></button>
+        <div class="faq-a">Nëse mësimi yt i parë nuk shkon mirë, na shkruaj brenda 24 orësh dhe të ofrojmë një mësim provë falas me një mësues tjetër ose rimbursim të plotë. Ndryshimi i mësuesit është pa kufizim dhe pa penalitet.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Si mund të paguaj? <span class="ind">+</span></button>
+        <div class="faq-a">Pranohen kartat Visa dhe Mastercard, si dhe pagesa përmes bankave lokale në Shqipëri e Kosovë. Pagesa mbahet e sigurt nga meso.al dhe i kalon mësuesit vetëm pasi mësimi të jetë zhvilluar.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">A mund të anuloj një mësim? <span class="ind">+</span></button>
+        <div class="faq-a">Po. Anulimi është falas nëse bëhet të paktën 4 orë përpara fillimit. Nën këtë afat, mësimi konsiderohet i zhvilluar, përveç rasteve emergjente që i shqyrton ekipi ynë.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Si bëhem mësues në meso.al? <span class="ind">+</span></button>
+        <div class="faq-a">Plotëson aplikimin, ngarkon një video prezantimi 1–2 minutëshe dhe dokumentet e kualifikimit. Ekipi ynë e shqyrton brenda 5 ditësh pune. Nuk kërkohet domosdoshmërisht diplomë mësuesie për gjuhët — përvoja dhe niveli reali llogariten.</div>
+      </div>
+    </div>
+    <div class="center" style="margin-top:36px">
+      <p class="small">Nuk e gjete përgjigjen? <a href="kontakt.html">Na shkruaj</a> — përgjigjemi brenda 24 orësh.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark">m</span>meso<em style="color:#93B7FF">.al</em></a>
+        <p style="margin-top:16px;max-width:300px;font-size:14.5px">Platforma shqiptare që lidh nxënësit me mësues privatë online. Mëso çfarë të duash, kur të duash.</p>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="YouTube">yt</a>
+        </div>
+      </div>
+      <div>
+        <h4>Mëso</h4>
+        <ul>
+          <li><a href="mesues.html?lenda=anglisht">Anglisht</a></li>
+          <li><a href="mesues.html?lenda=gjermanisht">Gjermanisht</a></li>
+          <li><a href="mesues.html?lenda=italisht">Italisht</a></li>
+          <li><a href="mesues.html?lenda=matematike">Matematikë</a></li>
+          <li><a href="mesues.html?lenda=informatike">Informatikë</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Platforma</h4>
+        <ul>
+          <li><a href="si-funksionon.html">Si funksionon</a></li>
+          <li><a href="cmimet.html">Çmimet</a></li>
+          <li><a href="mesues.html">Gjej mësues</a></li>
+          <li><a href="behu-mesues.html">Bëhu mësues</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kompania</h4>
+        <ul>
+          <li><a href="rreth-nesh.html">Rreth nesh</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a href="behu-mesues.html">Karriera</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ndihmë</h4>
+        <ul>
+          <li><a href="kontakt.html">Qendra e ndihmës</a></li>
+          <li><a href="kushtet.html">Kushtet e përdorimit</a></li>
+          <li><a href="kushtet.html#privatesia">Privatësia</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> meso.al — Të gjitha të drejtat e rezervuara.</span>
+      <span>Bërë me ♥ në Tiranë &amp; Prishtinë</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/tutors.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  // Lëndët
+  document.getElementById("lendet-grid").innerHTML = window.MESO_LENDET.map(function (l) {
+    return '<a class="subject" href="mesues.html?lenda=' + l.key + '">' +
+      '<span class="ico">' + l.ikona + '</span>' +
+      '<span><b>' + l.emer + '</b><span>' + l.numer + ' mësues</span></span></a>';
+  }).join("");
+
+  // Mësuesit e zgjedhur (6 me vlerësimin më të lartë)
+  var top = window.MESO_TUTORS.slice().sort(function (a, b) {
+    return (b.rating - a.rating) || (b.komente - a.komente);
+  }).slice(0, 6);
+  document.getElementById("mesues-grid").innerHTML = top.map(window.MesoUI.kartëMini).join("");
+</script>
+</body>
+</html>

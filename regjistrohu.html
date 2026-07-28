@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regjistrohu falas — meso.al</title>
+<meta name="description" content="Krijo llogarinë tënde falas në meso.al dhe rezervo mësimin e parë provë.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">m</span>meso<em>.al</em></a>
+    <nav class="nav-links" aria-label="Kryesore">
+      <a href="mesues.html">Gjej mësues</a>
+      <a href="si-funksionon.html">Si funksionon</a>
+      <a href="cmimet.html">Çmimet</a>
+      <a href="behu-mesues.html">Bëhu mësues</a>
+      <a href="rreth-nesh.html">Rreth nesh</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
+      <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
+      <button class="nav-burger" data-burger aria-label="Hap menunë" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+  <div class="container mobile-menu" data-mobile-menu>
+    <a href="mesues.html">Gjej mësues</a>
+    <a href="si-funksionon.html">Si funksionon</a>
+    <a href="cmimet.html">Çmimet</a>
+    <a href="behu-mesues.html">Bëhu mësues</a>
+    <a href="rreth-nesh.html">Rreth nesh</a>
+    <a href="kontakt.html">Kontakt</a>
+    <div class="btn-row">
+      <a class="btn btn-ghost btn-sm" href="hyr.html">Hyr</a>
+      <a class="btn btn-primary btn-sm" href="regjistrohu.html">Regjistrohu falas</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="section" style="padding-top:56px">
+  <div class="container" style="max-width:980px">
+    <div class="grid g-2" style="gap:48px;align-items:center" id="auth-grid">
+      <div>
+        <span class="badge badge-blue">Falas · pa kartë krediti</span>
+        <h1 class="h2" style="margin-top:16px">Krijo llogarinë dhe fillo të mësosh</h1>
+        <p class="lead">Regjistrimi zgjat një minutë. Paguan vetëm kur rezervon mësimin e parë.</p>
+        <div class="card" style="margin-top:28px;background:var(--blue-50);border-color:var(--blue-100)">
+          <div style="display:flex;gap:14px;align-items:center">
+            <div class="avatar avatar-sm av-1">EH</div>
+            <div><b style="font-size:14.5px">„Fillova pa e ditur nga ku”</b>
+              <div class="small">Elira të ndihmon të gjesh nivelin tënd në mësimin e parë.</div></div>
+          </div>
+        </div>
+        <div class="hero-stats" style="margin-top:28px">
+          <div><b>1.700+</b><span>mësues</span></div>
+          <div><b>31</b><span>lëndë</span></div>
+          <div><b>4,9★</b><span>vlerësim</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:32px;box-shadow:var(--sh-md)">
+        <div class="chip-row" style="margin-bottom:22px">
+          <button class="chip is-active" type="button" data-rol="nxenes">Jam nxënës</button>
+          <button class="chip" type="button" data-rol="mesues">Jam mësues</button>
+        </div>
+        <form data-demo-form="Llogaria u krijua (demo). Kjo faqe është një prototip — të dhënat nuk ruhen askund.">
+          <div class="grid g-2" style="gap:0 16px">
+            <div class="field-group"><label for="r-emri">Emri</label><input class="input" id="r-emri" required placeholder="Emri"></div>
+            <div class="field-group"><label for="r-mbiemri">Mbiemri</label><input class="input" id="r-mbiemri" required placeholder="Mbiemri"></div>
+          </div>
+          <div class="field-group"><label for="r-email">Email</label>
+            <input class="input" type="email" id="r-email" required placeholder="ti@example.com"></div>
+          <div class="field-group"><label for="r-pass">Fjalëkalimi</label>
+            <input class="input" type="password" id="r-pass" required minlength="8" placeholder="Të paktën 8 karaktere"></div>
+          <div class="field-group" id="grup-lenda"><label for="r-lenda">Çfarë dëshiron të mësosh?</label>
+            <select class="select" id="r-lenda">
+              <option value="">Zgjidh më vonë</option>
+              <option>Anglisht</option><option>Gjermanisht</option><option>Italisht</option>
+              <option>Frëngjisht</option><option>Turqisht</option><option>Gjuhë Shqipe</option>
+              <option>Matematikë</option><option>Fizikë</option><option>Kimi</option>
+              <option>Biologji</option><option>Informatikë</option><option>Muzikë</option>
+            </select></div>
+          <label class="check"><input type="checkbox" required> Pranoj <a href="kushtet.html">kushtet e përdorimit</a> dhe <a href="kushtet.html#privatesia">politikën e privatësisë</a>.</label>
+          <button class="btn btn-primary btn-lg btn-block" style="margin-top:22px" type="submit">Krijo llogarinë falas</button>
+          <div class="note hide" data-form-msg style="margin-top:18px"></div>
+          <div class="divider-txt">ose vazhdo me</div>
+          <div class="btn-row" style="flex-wrap:nowrap">
+            <button type="button" class="btn btn-ghost" style="flex:1">Google</button>
+            <button type="button" class="btn btn-ghost" style="flex:1">Facebook</button>
+          </div>
+          <p class="form-note center" style="margin-top:22px">Ke tashmë llogari? <a href="hyr.html">Hyr këtu</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html"><span class="logo-mark">m</span>meso<em style="color:#93B7FF">.al</em></a>
+        <p style="margin-top:16px;max-width:300px;font-size:14.5px">Platforma shqiptare që lidh nxënësit me mësues privatë online. Mëso çfarë të duash, kur të duash.</p>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="YouTube">yt</a>
+        </div>
+      </div>
+      <div><h4>Mëso</h4><ul>
+        <li><a href="mesues.html?lenda=anglisht">Anglisht</a></li>
+        <li><a href="mesues.html?lenda=gjermanisht">Gjermanisht</a></li>
+        <li><a href="mesues.html?lenda=italisht">Italisht</a></li>
+        <li><a href="mesues.html?lenda=matematike">Matematikë</a></li>
+        <li><a href="mesues.html?lenda=informatike">Informatikë</a></li>
+      </ul></div>
+      <div><h4>Platforma</h4><ul>
+        <li><a href="si-funksionon.html">Si funksionon</a></li>
+        <li><a href="cmimet.html">Çmimet</a></li>
+        <li><a href="mesues.html">Gjej mësues</a></li>
+        <li><a href="behu-mesues.html">Bëhu mësues</a></li>
+      </ul></div>
+      <div><h4>Kompania</h4><ul>
+        <li><a href="rreth-nesh.html">Rreth nesh</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="behu-mesues.html">Karriera</a></li>
+      </ul></div>
+      <div><h4>Ndihmë</h4><ul>
+        <li><a href="kontakt.html">Qendra e ndihmës</a></li>
+        <li><a href="kushtet.html">Kushtet e përdorimit</a></li>
+        <li><a href="kushtet.html#privatesia">Privatësia</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> meso.al — Të gjitha të drejtat e rezervuara.</span>
+      <span>Bërë me ♥ në Tiranë &amp; Prishtinë</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/tutors.js"></script>
+<script src="assets/js/main.js"></script>
+<style>@media(max-width:820px){#auth-grid{grid-template-columns:1fr !important;gap:32px !important}}</style>
+<script>
+document.querySelectorAll("[data-rol]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    document.querySelectorAll("[data-rol]").forEach(function (x) { x.classList.remove("is-active"); });
+    b.classList.add("is-active");
+    var eshteMesues = b.dataset.rol === "mesues";
+    document.getElementById("grup-lenda").classList.toggle("hide", eshteMesues);
+    document.querySelector("form button[type=submit]").textContent =
+      eshteMesues ? "Vazhdo te aplikimi për mësues" : "Krijo llogarinë falas";
+  });
+});
+</script>
+</body>
+</html>
