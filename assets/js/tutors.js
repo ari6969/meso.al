@@ -135,16 +135,16 @@ window.MESO_TUTORS = [
 ];
 
 window.MESO_LENDET = [
-  { key: "anglisht",    emer: "Anglisht",      ikona: "🇬🇧", numer: 412 },
-  { key: "gjermanisht", emer: "Gjermanisht",   ikona: "🇩🇪", numer: 187 },
-  { key: "italisht",    emer: "Italisht",      ikona: "🇮🇹", numer: 164 },
-  { key: "frengjisht",  emer: "Frëngjisht",    ikona: "🇫🇷", numer: 98  },
-  { key: "turqisht",    emer: "Turqisht",      ikona: "🇹🇷", numer: 76  },
-  { key: "shqip",       emer: "Gjuhë Shqipe",  ikona: "🇦🇱", numer: 121 },
-  { key: "matematike",  emer: "Matematikë",    ikona: "📐", numer: 233 },
-  { key: "fizike",      emer: "Fizikë",        ikona: "⚛️", numer: 89  },
-  { key: "kimi",        emer: "Kimi",          ikona: "🧪", numer: 71  },
-  { key: "biologji",    emer: "Biologji",      ikona: "🧬", numer: 64  },
-  { key: "informatike", emer: "Informatikë",   ikona: "💻", numer: 142 },
-  { key: "muzike",      emer: "Muzikë",        ikona: "🎹", numer: 47  }
+  { key: "anglisht",    emer: "Anglisht",      ikona: "🇬🇧", numer: 412, titull: "Mësues Anglishteje" },
+  { key: "gjermanisht", emer: "Gjermanisht",   ikona: "🇩🇪", numer: 187, titull: "Mësues Gjermanishteje" },
+  { key: "italisht",    emer: "Italisht",      ikona: "🇮🇹", numer: 164, titull: "Mësues Italishteje" },
+  { key: "frengjisht",  emer: "Frëngjisht",    ikona: "🇫🇷", numer: 98, titull: "Mësues Frëngjishteje" },
+  { key: "turqisht",    emer: "Turqisht",      ikona: "🇹🇷", numer: 76, titull: "Mësues Turqishteje" },
+  { key: "shqip",       emer: "Gjuhë Shqipe",  ikona: "🇦🇱", numer: 121, titull: "Mësues të Gjuhës Shqipe" },
+  { key: "matematike",  emer: "Matematikë",    ikona: "📐", numer: 233, titull: "Mësues Matematike" },
+  { key: "fizike",      emer: "Fizikë",        ikona: "⚛️", numer: 89, titull: "Mësues Fizike" },
+  { key: "kimi",        emer: "Kimi",          ikona: "🧪", numer: 71, titull: "Mësues Kimie" },
+  { key: "biologji",    emer: "Biologji",      ikona: "🧬", numer: 64, titull: "Mësues Biologjie" },
+  { key: "informatike", emer: "Informatikë",   ikona: "💻", numer: 142, titull: "Mësues Informatike" },
+  { key: "muzike",      emer: "Muzikë",        ikona: "🎹", numer: 47, titull: "Mësues Muzike" }
 ];

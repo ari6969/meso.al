@@ -203,10 +203,12 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; position: relative; }
 .hero h1 { font-size: clamp(36px, 4.8vw, 58px); letter-spacing: -.035em; }
-.hero h1 em { font-style: normal; color: var(--blue-600); position: relative; white-space: nowrap; }
-.hero h1 em::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 10px;
-  background: var(--blue-200); border-radius: 6px; z-index: -1;
+.hero h1 em {
+  font-style: normal; color: var(--blue-600); white-space: nowrap;
+  /* theksim që ndjek çdo rresht, pa u mbivendosur mbi shkronjat */
+  background-image: linear-gradient(transparent 74%, var(--blue-200) 74%, var(--blue-200) 94%, transparent 94%);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  padding-inline: 2px;
 }
 .hero-stats { display: flex; gap: 36px; margin-top: 34px; flex-wrap: wrap; }
 .hero-stats b { display: block; font-size: 26px; font-weight: 800; color: var(--blue-700); letter-spacing: -.02em; }
@@ -377,6 +379,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 
 /* ---------- 19. Profile page ---------- */
 .profile-grid { display: grid; grid-template-columns: 1fr 350px; gap: 40px; align-items: start; }
+/* aside-i shtrihet në lartësi që karta sticky të shoqërojë gjithë faqen */
+.profile-grid > aside { align-self: stretch; }
 .booking-card { position: sticky; top: calc(var(--nav-h) + 20px); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--sh); padding: 24px; background: #fff; }
 .video-ph {
   aspect-ratio: 16/9; border-radius: var(--r-md); background: linear-gradient(135deg, var(--blue-800), var(--blue-500));

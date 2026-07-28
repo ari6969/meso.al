@@ -15,7 +15,7 @@
 
 <header class="nav">
   <div class="container nav-inner">
-    <a class="logo" href="index.html"><span class="logo-mark">m</span>meso<em>.al</em></a>
+    <a class="logo" href="index.html"><span class="logo-mark">m</span><span>meso<em>.al</em></span></a>
     <nav class="nav-links" aria-label="Kryesore">
       <a href="mesues.html" class="is-active">Gjej mësues</a>
       <a href="si-funksionon.html">Si funksionon</a>
@@ -122,14 +122,6 @@
         <button class="btn btn-ghost" style="margin-top:18px" onclick="document.getElementById('pastro').click()">Pastro filtrat</button>
       </div>
 
-      <div class="pager" id="pager">
-        <span class="is-active">1</span>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">…</a>
-        <a href="#">14</a>
-      </div>
-
       <div class="note" style="margin-top:32px">
         ℹ️ <b>Kjo është një demo.</b> Të dhënat e mësuesve janë shembuj ilustrues për të treguar si funksionon platforma.
       </div>
@@ -141,7 +133,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a class="logo" href="index.html"><span class="logo-mark">m</span>meso<em style="color:#93B7FF">.al</em></a>
+        <a class="logo" href="index.html"><span class="logo-mark">m</span><span>meso<em style="color:#93B7FF">.al</em></span></a>
         <p style="margin-top:16px;max-width:300px;font-size:14.5px">Platforma shqiptare që lidh nxënësit me mësues privatë online. Mëso çfarë të duash, kur të duash.</p>
         <div class="socials">
           <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">ig</a>
@@ -187,7 +179,6 @@
   var selLenda = document.getElementById("f-lenda");
   var out      = document.getElementById("rezultatet");
   var bosh     = document.getElementById("bosh");
-  var pager    = document.getElementById("pager");
 
   // Mbush select-in dhe chip-at e lëndëve
   MESO_LENDET.forEach(function (l) {
@@ -244,12 +235,11 @@
     out.innerHTML = lista.map(MesoUI.kartëPlotë).join("");
     document.getElementById("numri").textContent = lista.length;
     bosh.classList.toggle("hide", lista.length > 0);
-    pager.classList.toggle("hide", lista.length === 0);
 
     // Titulli dinamik
     var em = MESO_LENDET.filter(function (l) { return l.key === lenda; })[0];
     document.getElementById("titulli").textContent =
-      em ? "Mësues të " + em.emer : "Gjej mësuesin tënd";
+      em ? em.titull : "Gjej mësuesin tënd";
 
     // Sinkronizo chip-at
     document.querySelectorAll("[data-chip]").forEach(function (c) {
