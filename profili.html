@@ -95,217 +95,221 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/db.js"></script>
 <script>
-(function () {
-  var id = new URLSearchParams(location.search).get("id") || MESO_TUTORS[0].id;
-  var t  = MESO_TUTORS.filter(function (x) { return x.id === id; })[0] || MESO_TUTORS[0];
-  var lenda = MESO_LENDET.filter(function (l) { return l.key === t.lenda; })[0];
-  var roli  = lenda ? lenda.titull : "Mësues";
-  document.title = t.emri + " — " + roli + " | meso.al";
+MesoDB.ngarko().then(function () {
 
-  var komente = [
-    { emri: "Marsel Gjoka",   nofka: "MG", av: "av-4", kur: "2 javë më parë", yje: 5,
-      tekst: "Shpjegime shumë të qarta dhe durim i madh. Pas 10 mësimesh e ndjej veten shumë më të sigurt kur flas." },
-    { emri: "Ina Rexha",      nofka: "IR", av: "av-3", kur: "1 muaj më parë", yje: 5,
-      tekst: "Përgatitet për çdo mësim me materiale të personalizuara. Nuk është thjesht bisedë e lirë — ka plan të qartë." },
-    { emri: "Ardit Selimi",   nofka: "AS", av: "av-5", kur: "1 muaj më parë", yje: 5,
-      tekst: "E rekomandoj pa hezitim. Shumë korrekt me oraret dhe gjithmonë i disponueshëm për pyetje edhe jashtë mësimit." },
-    { emri: "Kaltrina Berisha", nofka: "KB", av: "av-7", kur: "2 muaj më parë", yje: 4,
-      tekst: "Mësime shumë të mira. E vetmja gjë: ndonjëherë ritmi është pak i shpejtë për fillestarët absolutë." }
-  ];
+  (function () {
+    var id = new URLSearchParams(location.search).get("id") || MESO_TUTORS[0].id;
+    var t  = MESO_TUTORS.filter(function (x) { return x.id === id; })[0] || MESO_TUTORS[0];
+    var lenda = MESO_LENDET.filter(function (l) { return l.key === t.lenda; })[0];
+    var roli  = lenda ? lenda.titull : "Mësues";
+    document.title = t.emri + " — " + roli + " | meso.al";
 
-  var oret = ["09:00","10:00","11:00","15:00","16:00","17:00","18:00","19:00"];
-  var dite = ["Hën","Mar","Mër","Enj","Pre","Sht","Die"];
+    var komente = [
+      { emri: "Marsel Gjoka",   nofka: "MG", av: "av-4", kur: "2 javë më parë", yje: 5,
+        tekst: "Shpjegime shumë të qarta dhe durim i madh. Pas 10 mësimesh e ndjej veten shumë më të sigurt kur flas." },
+      { emri: "Ina Rexha",      nofka: "IR", av: "av-3", kur: "1 muaj më parë", yje: 5,
+        tekst: "Përgatitet për çdo mësim me materiale të personalizuara. Nuk është thjesht bisedë e lirë — ka plan të qartë." },
+      { emri: "Ardit Selimi",   nofka: "AS", av: "av-5", kur: "1 muaj më parë", yje: 5,
+        tekst: "E rekomandoj pa hezitim. Shumë korrekt me oraret dhe gjithmonë i disponueshëm për pyetje edhe jashtë mësimit." },
+      { emri: "Kaltrina Berisha", nofka: "KB", av: "av-7", kur: "2 muaj më parë", yje: 4,
+        tekst: "Mësime shumë të mira. E vetmja gjë: ndonjëherë ritmi është pak i shpejtë për fillestarët absolutë." }
+    ];
 
-  // Orari — model deterministik nga vetë të dhënat e mësuesit
-  var slots = "";
-  for (var r = 0; r < 4; r++) {
-    for (var d = 0; d < 7; d++) {
-      var i = r * 7 + d;
-      var free = (i * 7 + t.emri.length) % 3 !== 0 && !(d === 6 && r > 1);
-      slots += '<div class="slot' + (free ? " free" : "") + '"' +
-        (free ? ' data-ore="' + oret[(i + t.cmim) % oret.length] + '"' : "") + '>' +
-        (free ? oret[(i + t.cmim) % oret.length] : "—") + "</div>";
+    var oret = ["09:00","10:00","11:00","15:00","16:00","17:00","18:00","19:00"];
+    var dite = ["Hën","Mar","Mër","Enj","Pre","Sht","Die"];
+
+    // Orari — model deterministik nga vetë të dhënat e mësuesit
+    var slots = "";
+    for (var r = 0; r < 4; r++) {
+      for (var d = 0; d < 7; d++) {
+        var i = r * 7 + d;
+        var free = (i * 7 + t.emri.length) % 3 !== 0 && !(d === 6 && r > 1);
+        slots += '<div class="slot' + (free ? " free" : "") + '"' +
+          (free ? ' data-ore="' + oret[(i + t.cmim) % oret.length] + '"' : "") + '>' +
+          (free ? oret[(i + t.cmim) % oret.length] : "—") + "</div>";
+      }
     }
-  }
 
-  var tjeret = MESO_TUTORS.filter(function (x) { return x.id !== t.id && x.lenda === t.lenda; });
-  if (tjeret.length < 3) {
-    tjeret = tjeret.concat(MESO_TUTORS.filter(function (x) {
-      return x.id !== t.id && tjeret.indexOf(x) === -1;
-    }));
-  }
-  tjeret = tjeret.slice(0, 3);
+    var tjeret = MESO_TUTORS.filter(function (x) { return x.id !== t.id && x.lenda === t.lenda; });
+    if (tjeret.length < 3) {
+      tjeret = tjeret.concat(MESO_TUTORS.filter(function (x) {
+        return x.id !== t.id && tjeret.indexOf(x) === -1;
+      }));
+    }
+    tjeret = tjeret.slice(0, 3);
 
-  document.getElementById("profil").innerHTML =
-  '<section class="pagehead">' +
-    '<div class="container">' +
-      '<div class="crumbs"><a href="index.html">Ballina</a> <span>/</span> <a href="mesues.html">Mësuesit</a> <span>/</span> <a href="mesues.html?lenda=' + t.lenda + '">' + t.lendaEmer + '</a> <span>/</span> <span>' + t.emri + '</span></div>' +
-      '<div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap">' +
-        '<div class="avatar-wrap">' +
-          '<div class="avatar avatar-xl ' + t.av + '">' + t.nofka + '</div>' +
-          (t.online ? '<span class="avatar-online" style="width:22px;height:22px;right:6px;bottom:6px"></span>' : "") +
-        '</div>' +
-        '<div>' +
-          '<div class="tutor-name"><h1 class="h2">' + t.emri + '</h1><span style="font-size:26px">' + t.flamur + '</span>' +
-            (t.super ? '<span class="badge badge-amber">⚡ Mësues super</span>' : "") + '</div>' +
-          '<p class="lead" style="margin-top:8px">' + roli + ' · ' + t.qyteti + '</p>' +
-          '<div class="tutor-meta" style="margin-top:14px;gap:10px 24px">' +
-            '<span class="rate">' + MesoUI.yll(t.rating) + ' <span class="small" style="font-weight:400">(' + t.komente + ' komente)</span></span>' +
-            '<span>🎓 <i>' + t.mesime.toLocaleString("de-DE") + '</i> mësime</span>' +
-            '<span>⚡ Përgjigjet brenda <i>2 orësh</i></span>' +
-            '<span>🗣️ Flet <i>' + t.gjuhe.length + '</i> gjuhë</span>' +
-            (t.nxenesitNga ? '<span>🌍 Nxënës nga <i>' + t.nxenesitNga.join(', ') + '</i></span>' : '') +
+    document.getElementById("profil").innerHTML =
+    '<section class="pagehead">' +
+      '<div class="container">' +
+        '<div class="crumbs"><a href="index.html">Ballina</a> <span>/</span> <a href="mesues.html">Mësuesit</a> <span>/</span> <a href="mesues.html?lenda=' + t.lenda + '">' + t.lendaEmer + '</a> <span>/</span> <span>' + t.emri + '</span></div>' +
+        '<div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap">' +
+          '<div class="avatar-wrap">' +
+            '<div class="avatar avatar-xl ' + t.av + '">' + t.nofka + '</div>' +
+            (t.online ? '<span class="avatar-online" style="width:22px;height:22px;right:6px;bottom:6px"></span>' : "") +
+          '</div>' +
+          '<div>' +
+            '<div class="tutor-name"><h1 class="h2">' + t.emri + '</h1><span style="font-size:26px">' + t.flamur + '</span>' +
+              (t.super ? '<span class="badge badge-amber">⚡ Mësues super</span>' : "") + '</div>' +
+            '<p class="lead" style="margin-top:8px">' + roli + ' · ' + t.qyteti + '</p>' +
+            '<div class="tutor-meta" style="margin-top:14px;gap:10px 24px">' +
+              '<span class="rate">' + MesoUI.yll(t.rating) + ' <span class="small" style="font-weight:400">(' + t.komente + ' komente)</span></span>' +
+              '<span>🎓 <i>' + t.mesime.toLocaleString("de-DE") + '</i> mësime</span>' +
+              '<span>⚡ Përgjigjet brenda <i>2 orësh</i></span>' +
+              '<span>🗣️ Flet <i>' + t.gjuhe.length + '</i> gjuhë</span>' +
+              (t.nxenesitNga ? '<span>🌍 Nxënës nga <i>' + t.nxenesitNga.join(', ') + '</i></span>' : '') +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</div>' +
-    '</div>' +
-  '</section>' +
+    '</section>' +
 
-  '<section class="section-sm"><div class="container profile-grid">' +
+    '<section class="section-sm"><div class="container profile-grid">' +
 
-    // KOLONA MAJTAS
-    '<div>' +
-      '<div class="video-ph"><div class="play">▶</div>' +
-        '<div style="position:absolute;left:20px;bottom:18px;font-weight:650">Video prezantimi · 1:42</div></div>' +
+      // KOLONA MAJTAS
+      '<div>' +
+        '<div class="video-ph"><div class="play">▶</div>' +
+          '<div style="position:absolute;left:20px;bottom:18px;font-weight:650">Video prezantimi · 1:42</div></div>' +
 
-      '<div style="margin-top:36px">' +
-        '<h2 class="h3">Rreth meje</h2>' +
-        '<p style="margin-top:14px;color:var(--ink-2);line-height:1.75">' + t.bio + '</p>' +
-        '<p style="margin-top:14px;color:var(--ink-2);line-height:1.75">Në mësimin e parë bisedojmë për objektivat e tua dhe bëjmë një vlerësim të shkurtër të nivelit. Pastaj ndërtoj një plan personal me materiale që i përgatis vetë. Nuk përdor tekste standarde që nuk të shërbejnë — çdo orë ka një qëllim konkret.</p>' +
-        '<div class="chip-row" style="margin-top:20px">' +
-          t.tags.map(function (x) { return '<span class="badge badge-blue">' + x + "</span>"; }).join("") +
+        '<div style="margin-top:36px">' +
+          '<h2 class="h3">Rreth meje</h2>' +
+          '<p style="margin-top:14px;color:var(--ink-2);line-height:1.75">' + t.bio + '</p>' +
+          '<p style="margin-top:14px;color:var(--ink-2);line-height:1.75">Në mësimin e parë bisedojmë për objektivat e tua dhe bëjmë një vlerësim të shkurtër të nivelit. Pastaj ndërtoj një plan personal me materiale që i përgatis vetë. Nuk përdor tekste standarde që nuk të shërbejnë — çdo orë ka një qëllim konkret.</p>' +
+          '<div class="chip-row" style="margin-top:20px">' +
+            t.tags.map(function (x) { return '<span class="badge badge-blue">' + x + "</span>"; }).join("") +
+          '</div>' +
+        '</div>' +
+
+        '<div style="margin-top:36px" class="grid g-2">' +
+          '<div class="card"><h3 class="h3" style="font-size:17px;margin-bottom:12px">🗣️ Gjuhët</h3>' +
+            '<ul style="display:flex;flex-direction:column;gap:8px">' +
+              t.gjuhe.map(function (g) { return '<li class="small">• ' + g + "</li>"; }).join("") + '</ul></div>' +
+          '<div class="card"><h3 class="h3" style="font-size:17px;margin-bottom:12px">📚 Nivelet që mbuloj</h3>' +
+            '<ul style="display:flex;flex-direction:column;gap:8px">' +
+              t.nivele.map(function (n) {
+                return '<li class="small">• ' + n.charAt(0).toUpperCase() + n.slice(1) + "</li>"; }).join("") +
+            '</ul></div>' +
+        '</div>' +
+
+        '<div style="margin-top:36px">' +
+          '<h2 class="h3">Përvoja dhe kualifikimet</h2>' +
+          '<div class="card" style="margin-top:16px">' +
+            '<div style="display:flex;gap:16px"><div class="avatar avatar-sm sq av-1">🎓</div><div>' +
+              '<b>Master në ' + t.lendaEmer + '</b><div class="small">Universiteti i Tiranës · 2014–2016</div></div></div>' +
+            '<hr style="margin:18px 0">' +
+            '<div style="display:flex;gap:16px"><div class="avatar avatar-sm sq av-2">📜</div><div>' +
+              '<b>Certifikatë ndërkombëtare mësimdhënieje</b><div class="small">Lëshuar 2018 · e verifikuar nga meso.al</div></div></div>' +
+            '<hr style="margin:18px 0">' +
+            '<div style="display:flex;gap:16px"><div class="avatar avatar-sm sq av-5">💼</div><div>' +
+              '<b>' + (new Date().getFullYear() - 2016) + ' vjet përvojë mësimdhënieje</b>' +
+              '<div class="small">' + t.mesime.toLocaleString("de-DE") + ' mësime në meso.al</div></div></div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="margin-top:36px">' +
+          '<h2 class="h3">Orari i lirë</h2>' +
+          '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 18px">' +
+            '<span class="small">Orët e theksuara janë të lira. Shfaqi në orën e:</span>' +
+            '<select class="select" id="zona-sel" style="width:auto;height:38px;font-size:14px">' +
+              MESO_ZONAT.map(function (z, i) {
+                return '<option value="' + z.ofset + '">' + z.emer + '</option>';
+              }).join("") + '</select>' +
+          '</div>' +
+          '<div class="card">' +
+            '<div class="slot-grid" style="margin-bottom:8px">' + dite.map(function (d) {
+              return '<div class="d">' + d + "</div>"; }).join("") + '</div>' +
+            '<div class="slot-grid">' + slots + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="margin-top:36px">' +
+          '<h2 class="h3">Komentet e nxënësve</h2>' +
+          '<div class="card" style="margin-top:16px;display:flex;gap:32px;align-items:center;flex-wrap:wrap">' +
+            '<div style="text-align:center"><div class="rating-big">' + t.rating.toFixed(1) + '</div>' +
+              '<div class="stars" style="color:var(--amber);letter-spacing:2px">★★★★★</div>' +
+              '<div class="tiny">' + t.komente + ' komente</div></div>' +
+            '<div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">' +
+              [5,4,3,2,1].map(function (n, idx) {
+                var p = [88,9,2,1,0][idx];
+                return '<div style="display:flex;align-items:center;gap:10px"><span class="tiny" style="width:14px">' + n +
+                  '</span><div class="bar" style="flex:1"><i style="width:' + p + '%"></i></div>' +
+                  '<span class="tiny" style="width:34px;text-align:right">' + p + '%</span></div>';
+              }).join("") +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top:10px">' + komente.map(function (k) {
+            return '<div class="review"><div style="display:flex;gap:14px;align-items:center">' +
+              '<div class="avatar avatar-sm ' + k.av + '">' + k.nofka + '</div>' +
+              '<div><b>' + k.emri + '</b><div class="tiny">' + k.kur + '</div></div>' +
+              '<div style="margin-left:auto;color:var(--amber);letter-spacing:1px">' +
+                "★".repeat(k.yje) + '<span style="color:var(--line)">' + "★".repeat(5 - k.yje) + '</span></div></div>' +
+              '<p style="margin-top:12px;color:var(--ink-2);font-size:15px">„' + k.tekst + '”</p></div>';
+          }).join("") + '</div>' +
+          '<button class="btn btn-ghost" style="margin-top:20px">Shiko të gjitha ' + t.komente + ' komentet</button>' +
         '</div>' +
       '</div>' +
 
-      '<div style="margin-top:36px" class="grid g-2">' +
-        '<div class="card"><h3 class="h3" style="font-size:17px;margin-bottom:12px">🗣️ Gjuhët</h3>' +
-          '<ul style="display:flex;flex-direction:column;gap:8px">' +
-            t.gjuhe.map(function (g) { return '<li class="small">• ' + g + "</li>"; }).join("") + '</ul></div>' +
-        '<div class="card"><h3 class="h3" style="font-size:17px;margin-bottom:12px">📚 Nivelet që mbuloj</h3>' +
-          '<ul style="display:flex;flex-direction:column;gap:8px">' +
-            t.nivele.map(function (n) {
-              return '<li class="small">• ' + n.charAt(0).toUpperCase() + n.slice(1) + "</li>"; }).join("") +
-          '</ul></div>' +
-      '</div>' +
-
-      '<div style="margin-top:36px">' +
-        '<h2 class="h3">Përvoja dhe kualifikimet</h2>' +
-        '<div class="card" style="margin-top:16px">' +
-          '<div style="display:flex;gap:16px"><div class="avatar avatar-sm sq av-1">🎓</div><div>' +
-            '<b>Master në ' + t.lendaEmer + '</b><div class="small">Universiteti i Tiranës · 2014–2016</div></div></div>' +
-          '<hr style="margin:18px 0">' +
-          '<div style="display:flex;gap:16px"><div class="avatar avatar-sm sq av-2">📜</div><div>' +
-            '<b>Certifikatë ndërkombëtare mësimdhënieje</b><div class="small">Lëshuar 2018 · e verifikuar nga meso.al</div></div></div>' +
-          '<hr style="margin:18px 0">' +
-          '<div style="display:flex;gap:16px"><div class="avatar avatar-sm sq av-5">💼</div><div>' +
-            '<b>' + (new Date().getFullYear() - 2016) + ' vjet përvojë mësimdhënieje</b>' +
-            '<div class="small">' + t.mesime.toLocaleString("de-DE") + ' mësime në meso.al</div></div></div>' +
+      // KOLONA DJATHTAS
+      '<aside>' +
+        '<div class="booking-card">' +
+          '<div style="display:flex;align-items:baseline;justify-content:space-between">' +
+            '<div class="price">' + MesoUI.cmim(t.cmim) + '<small> / 50 min</small></div>' +
+            '<span class="rate">' + MesoUI.yll(t.rating) + '</span>' +
+          '</div>' +
+          (t.provë ? '<div class="badge badge-green" style="margin-top:12px">🎯 Mësim provë me €' + Math.max(3, t.cmim - 3) + '</div>' : "") +
+          '<div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">' +
+            '<a class="btn btn-primary btn-block" href="regjistrohu.html">Rezervo mësim provë</a>' +
+            '<a class="btn btn-ghost btn-block" href="hyr.html">Dërgo mesazh</a>' +
+          '</div>' +
+          '<hr style="margin:22px 0">' +
+          '<ul style="display:flex;flex-direction:column;gap:12px;font-size:14px;color:var(--ink-2)">' +
+            '<li>✅ Pagesa mbahet e sigurt derisa mësimi të përfundojë</li>' +
+            '<li>🔄 Ndërro mësuesin falas nëse nuk të përshtatet</li>' +
+            '<li>🕗 Anulim pa pagesë deri 4 orë përpara</li>' +
+          '</ul>' +
+          '<hr style="margin:22px 0">' +
+          '<div class="tiny">Zakonisht përgjigjet brenda <b style="color:var(--ink)">2 orësh</b> · ' +
+            (t.online ? '<span style="color:var(--green);font-weight:650">Online tani</span>' : "I disponueshëm sot") + '</div>' +
         '</div>' +
-      '</div>' +
 
-      '<div style="margin-top:36px">' +
-        '<h2 class="h3">Orari i lirë</h2>' +
-        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 18px">' +
-          '<span class="small">Orët e theksuara janë të lira. Shfaqi në orën e:</span>' +
-          '<select class="select" id="zona-sel" style="width:auto;height:38px;font-size:14px">' +
-            MESO_ZONAT.map(function (z, i) {
-              return '<option value="' + z.ofset + '">' + z.emer + '</option>';
-            }).join("") + '</select>' +
-        '</div>' +
-        '<div class="card">' +
-          '<div class="slot-grid" style="margin-bottom:8px">' + dite.map(function (d) {
-            return '<div class="d">' + d + "</div>"; }).join("") + '</div>' +
-          '<div class="slot-grid">' + slots + '</div>' +
-        '</div>' +
-      '</div>' +
-
-      '<div style="margin-top:36px">' +
-        '<h2 class="h3">Komentet e nxënësve</h2>' +
-        '<div class="card" style="margin-top:16px;display:flex;gap:32px;align-items:center;flex-wrap:wrap">' +
-          '<div style="text-align:center"><div class="rating-big">' + t.rating.toFixed(1) + '</div>' +
-            '<div class="stars" style="color:var(--amber);letter-spacing:2px">★★★★★</div>' +
-            '<div class="tiny">' + t.komente + ' komente</div></div>' +
-          '<div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">' +
-            [5,4,3,2,1].map(function (n, idx) {
-              var p = [88,9,2,1,0][idx];
-              return '<div style="display:flex;align-items:center;gap:10px"><span class="tiny" style="width:14px">' + n +
-                '</span><div class="bar" style="flex:1"><i style="width:' + p + '%"></i></div>' +
-                '<span class="tiny" style="width:34px;text-align:right">' + p + '%</span></div>';
+              '<div class="card" style="margin-top:20px">' +
+          '<h3 style="font-size:16px;margin-bottom:6px">Paketa nga ky mësues</h3>' +
+          '<p class="tiny" style="margin-bottom:14px">Uljet i cakton vetë ' + t.emri.split(" ")[0] + ', jo platforma.</p>' +
+          '<div style="display:flex;flex-direction:column;gap:10px">' +
+            [[5, t.ulje.p5], [10, t.ulje.p10], [20, t.ulje.p20]].map(function (r) {
+              var plot = t.cmim * r[0];
+              var fund = Math.round(plot * (100 - r[1]) / 100);
+              return '<div style="display:flex;justify-content:space-between;align-items:center;font-size:14.5px">' +
+                '<span>' + r[0] + ' mësime' +
+                (r[1] ? ' <span class="badge badge-green">−' + r[1] + '%</span>' : '') + '</span>' +
+                '<b>' + MesoUI.cmim(fund) + '</b></div>';
             }).join("") +
           '</div>' +
+          (t.ulje.p5 || t.ulje.p10 || t.ulje.p20 ? '' :
+            '<p class="tiny" style="margin-top:12px">Ky mësues nuk ofron ulje për paketa.</p>') +
         '</div>' +
-        '<div style="margin-top:10px">' + komente.map(function (k) {
-          return '<div class="review"><div style="display:flex;gap:14px;align-items:center">' +
-            '<div class="avatar avatar-sm ' + k.av + '">' + k.nofka + '</div>' +
-            '<div><b>' + k.emri + '</b><div class="tiny">' + k.kur + '</div></div>' +
-            '<div style="margin-left:auto;color:var(--amber);letter-spacing:1px">' +
-              "★".repeat(k.yje) + '<span style="color:var(--line)">' + "★".repeat(5 - k.yje) + '</span></div></div>' +
-            '<p style="margin-top:12px;color:var(--ink-2);font-size:15px">„' + k.tekst + '”</p></div>';
-        }).join("") + '</div>' +
-        '<button class="btn btn-ghost" style="margin-top:20px">Shiko të gjitha ' + t.komente + ' komentet</button>' +
-      '</div>' +
-    '</div>' +
+      '</aside>' +
+    '</div></section>' +
 
-    // KOLONA DJATHTAS
-    '<aside>' +
-      '<div class="booking-card">' +
-        '<div style="display:flex;align-items:baseline;justify-content:space-between">' +
-          '<div class="price">' + MesoUI.cmim(t.cmim) + '<small> / 50 min</small></div>' +
-          '<span class="rate">' + MesoUI.yll(t.rating) + '</span>' +
-        '</div>' +
-        (t.provë ? '<div class="badge badge-green" style="margin-top:12px">🎯 Mësim provë me €' + Math.max(3, t.cmim - 3) + '</div>' : "") +
-        '<div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">' +
-          '<a class="btn btn-primary btn-block" href="regjistrohu.html">Rezervo mësim provë</a>' +
-          '<a class="btn btn-ghost btn-block" href="hyr.html">Dërgo mesazh</a>' +
-        '</div>' +
-        '<hr style="margin:22px 0">' +
-        '<ul style="display:flex;flex-direction:column;gap:12px;font-size:14px;color:var(--ink-2)">' +
-          '<li>✅ Pagesa mbahet e sigurt derisa mësimi të përfundojë</li>' +
-          '<li>🔄 Ndërro mësuesin falas nëse nuk të përshtatet</li>' +
-          '<li>🕗 Anulim pa pagesë deri 4 orë përpara</li>' +
-        '</ul>' +
-        '<hr style="margin:22px 0">' +
-        '<div class="tiny">Zakonisht përgjigjet brenda <b style="color:var(--ink)">2 orësh</b> · ' +
-          (t.online ? '<span style="color:var(--green);font-weight:650">Online tani</span>' : "I disponueshëm sot") + '</div>' +
-      '</div>' +
+    '<section class="section section-soft"><div class="container">' +
+      '<div class="section-head"><h2 class="h2">Mësues të tjerë që mund të të pëlqejnë</h2></div>' +
+      '<div class="grid g-3">' + tjeret.map(MesoUI.kartëMini).join("") + '</div>' +
+    '</div></section>';
 
-            '<div class="card" style="margin-top:20px">' +
-        '<h3 style="font-size:16px;margin-bottom:6px">Paketa nga ky mësues</h3>' +
-        '<p class="tiny" style="margin-bottom:14px">Uljet i cakton vetë ' + t.emri.split(" ")[0] + ', jo platforma.</p>' +
-        '<div style="display:flex;flex-direction:column;gap:10px">' +
-          [[5, t.ulje.p5], [10, t.ulje.p10], [20, t.ulje.p20]].map(function (r) {
-            var plot = t.cmim * r[0];
-            var fund = Math.round(plot * (100 - r[1]) / 100);
-            return '<div style="display:flex;justify-content:space-between;align-items:center;font-size:14.5px">' +
-              '<span>' + r[0] + ' mësime' +
-              (r[1] ? ' <span class="badge badge-green">−' + r[1] + '%</span>' : '') + '</span>' +
-              '<b>' + MesoUI.cmim(fund) + '</b></div>';
-          }).join("") +
-        '</div>' +
-        (t.ulje.p5 || t.ulje.p10 || t.ulje.p20 ? '' :
-          '<p class="tiny" style="margin-top:12px">Ky mësues nuk ofron ulje për paketa.</p>') +
-      '</div>' +
-    '</aside>' +
-  '</div></section>' +
-
-  '<section class="section section-soft"><div class="container">' +
-    '<div class="section-head"><h2 class="h2">Mësues të tjerë që mund të të pëlqejnë</h2></div>' +
-    '<div class="grid g-3">' + tjeret.map(MesoUI.kartëMini).join("") + '</div>' +
-  '</div></section>';
-
-  /* --- Zhvendosja e orarit sipas zonës kohore të vizitorit --- */
-  var zonaSel = document.getElementById("zona-sel");
-  if (zonaSel) {
-    zonaSel.addEventListener("change", function () {
-      var ofset = +this.value;
-      document.querySelectorAll(".slot[data-ore]").forEach(function (el) {
-        var baza = el.dataset.ore.split(":");
-        var ore = (((+baza[0] + ofset) % 24) + 24) % 24;
-        el.textContent = (ore < 10 ? "0" : "") + ore + ":" + baza[1];
+    /* --- Zhvendosja e orarit sipas zonës kohore të vizitorit --- */
+    var zonaSel = document.getElementById("zona-sel");
+    if (zonaSel) {
+      zonaSel.addEventListener("change", function () {
+        var ofset = +this.value;
+        document.querySelectorAll(".slot[data-ore]").forEach(function (el) {
+          var baza = el.dataset.ore.split(":");
+          var ore = (((+baza[0] + ofset) % 24) + 24) % 24;
+          el.textContent = (ore < 10 ? "0" : "") + ore + ":" + baza[1];
+        });
       });
-    });
-  }
-})();
+    }
+  })();
+
+});
 </script>
 </body>
 </html>

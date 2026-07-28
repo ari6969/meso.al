@@ -179,99 +179,103 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/db.js"></script>
 <script>
-(function () {
-  var params  = new URLSearchParams(location.search);
-  var selLenda = document.getElementById("f-lenda");
-  var out      = document.getElementById("rezultatet");
-  var bosh     = document.getElementById("bosh");
+MesoDB.ngarko().then(function () {
 
-  // Mbush select-in dhe chip-at e lëndëve
-  MESO_LENDET.forEach(function (l) {
-    var o = document.createElement("option");
-    o.value = l.key; o.textContent = l.emer;
-    selLenda.appendChild(o);
-  });
-  document.getElementById("chips-lendet").innerHTML =
-    '<button class="chip" data-chip="">Të gjitha</button>' +
-    MESO_LENDET.map(function (l) {
-      return '<button class="chip" data-chip="' + l.key + '">' + l.ikona + " " + l.emer + "</button>";
-    }).join("");
+  (function () {
+    var params  = new URLSearchParams(location.search);
+    var selLenda = document.getElementById("f-lenda");
+    var out      = document.getElementById("rezultatet");
+    var bosh     = document.getElementById("bosh");
 
-  // Gjendja fillestare nga URL
-  if (params.get("lenda")) selLenda.value = params.get("lenda");
-  if (params.get("nivel")) {
-    var cb = document.querySelector('input[name=nivel][value="' + params.get("nivel") + '"]');
-    if (cb) cb.checked = true;
-  }
-
-  function vlerat(name) {
-    return Array.prototype.map.call(
-      document.querySelectorAll('input[name=' + name + ']:checked'), function (i) { return i.value; });
-  }
-
-  function filtro() {
-    var lenda  = selLenda.value;
-    var maxC   = +document.getElementById("f-cmim").value;
-    var nivele = vlerat("nivel");
-    var orare  = vlerat("orar");
-    var vetemSuper  = document.getElementById("f-super").checked;
-    var vetemProve  = document.getElementById("f-prove").checked;
-    var vetemOnline = document.getElementById("f-online").checked;
-
-    var lista = MESO_TUTORS.filter(function (t) {
-      if (lenda && t.lenda !== lenda) return false;
-      if (maxC < 20 && t.cmim > maxC) return false;
-      if (nivele.length && !nivele.some(function (n) { return t.nivele.indexOf(n) > -1; })) return false;
-      if (orare.length && !orare.some(function (o) { return t.orare.indexOf(o) > -1; })) return false;
-      if (vetemSuper && !t.super) return false;
-      if (vetemProve && !t.provë) return false;
-      if (vetemOnline && !t.online) return false;
-      return true;
+    // Mbush select-in dhe chip-at e lëndëve
+    MESO_LENDET.forEach(function (l) {
+      var o = document.createElement("option");
+      o.value = l.key; o.textContent = l.emer;
+      selLenda.appendChild(o);
     });
+    document.getElementById("chips-lendet").innerHTML =
+      '<button class="chip" data-chip="">Të gjitha</button>' +
+      MESO_LENDET.map(function (l) {
+        return '<button class="chip" data-chip="' + l.key + '">' + l.ikona + " " + l.emer + "</button>";
+      }).join("");
 
-    switch (document.getElementById("f-rendit").value) {
-      case "cmim-ulet":  lista.sort(function (a, b) { return a.cmim - b.cmim; }); break;
-      case "cmim-larte": lista.sort(function (a, b) { return b.cmim - a.cmim; }); break;
-      case "rating":     lista.sort(function (a, b) { return b.rating - a.rating || b.komente - a.komente; }); break;
-      case "mesime":     lista.sort(function (a, b) { return b.mesime - a.mesime; }); break;
-      default:           lista.sort(function (a, b) { return (b.super - a.super) || (b.rating - a.rating); });
+    // Gjendja fillestare nga URL
+    if (params.get("lenda")) selLenda.value = params.get("lenda");
+    if (params.get("nivel")) {
+      var cb = document.querySelector('input[name=nivel][value="' + params.get("nivel") + '"]');
+      if (cb) cb.checked = true;
     }
 
-    out.innerHTML = lista.map(MesoUI.kartëPlotë).join("");
-    document.getElementById("numri").textContent = lista.length;
-    bosh.classList.toggle("hide", lista.length > 0);
+    function vlerat(name) {
+      return Array.prototype.map.call(
+        document.querySelectorAll('input[name=' + name + ']:checked'), function (i) { return i.value; });
+    }
 
-    // Titulli dinamik
-    var em = MESO_LENDET.filter(function (l) { return l.key === lenda; })[0];
-    document.getElementById("titulli").textContent =
-      em ? em.titull : "Gjej mësuesin tënd";
+    function filtro() {
+      var lenda  = selLenda.value;
+      var maxC   = +document.getElementById("f-cmim").value;
+      var nivele = vlerat("nivel");
+      var orare  = vlerat("orar");
+      var vetemSuper  = document.getElementById("f-super").checked;
+      var vetemProve  = document.getElementById("f-prove").checked;
+      var vetemOnline = document.getElementById("f-online").checked;
 
-    // Sinkronizo chip-at
-    document.querySelectorAll("[data-chip]").forEach(function (c) {
-      c.classList.toggle("is-active", c.dataset.chip === lenda);
+      var lista = MESO_TUTORS.filter(function (t) {
+        if (lenda && t.lenda !== lenda) return false;
+        if (maxC < 20 && t.cmim > maxC) return false;
+        if (nivele.length && !nivele.some(function (n) { return t.nivele.indexOf(n) > -1; })) return false;
+        if (orare.length && !orare.some(function (o) { return t.orare.indexOf(o) > -1; })) return false;
+        if (vetemSuper && !t.super) return false;
+        if (vetemProve && !t.provë) return false;
+        if (vetemOnline && !t.online) return false;
+        return true;
+      });
+
+      switch (document.getElementById("f-rendit").value) {
+        case "cmim-ulet":  lista.sort(function (a, b) { return a.cmim - b.cmim; }); break;
+        case "cmim-larte": lista.sort(function (a, b) { return b.cmim - a.cmim; }); break;
+        case "rating":     lista.sort(function (a, b) { return b.rating - a.rating || b.komente - a.komente; }); break;
+        case "mesime":     lista.sort(function (a, b) { return b.mesime - a.mesime; }); break;
+        default:           lista.sort(function (a, b) { return (b.super - a.super) || (b.rating - a.rating); });
+      }
+
+      out.innerHTML = lista.map(MesoUI.kartëPlotë).join("");
+      document.getElementById("numri").textContent = lista.length;
+      bosh.classList.toggle("hide", lista.length > 0);
+
+      // Titulli dinamik
+      var em = MESO_LENDET.filter(function (l) { return l.key === lenda; })[0];
+      document.getElementById("titulli").textContent =
+        em ? em.titull : "Gjej mësuesin tënd";
+
+      // Sinkronizo chip-at
+      document.querySelectorAll("[data-chip]").forEach(function (c) {
+        c.classList.toggle("is-active", c.dataset.chip === lenda);
+      });
+    }
+
+    // Dëgjuesit
+    document.querySelectorAll(".filters input, .filters select, #f-rendit").forEach(function (el) {
+      el.addEventListener("change", filtro);
     });
-  }
+    document.getElementById("f-cmim").addEventListener("input", function () {
+      document.getElementById("f-cmim-val").textContent = "€" + this.value + (this.value === "20" ? "+" : "");
+    });
+    document.querySelectorAll("[data-chip]").forEach(function (c) {
+      c.addEventListener("click", function () { selLenda.value = c.dataset.chip; filtro(); });
+    });
+    document.getElementById("pastro").addEventListener("click", function () {
+      document.querySelectorAll(".filters input[type=checkbox]").forEach(function (i) { i.checked = false; });
+      selLenda.value = "";
+      document.getElementById("f-cmim").value = 20;
+      document.getElementById("f-cmim-val").textContent = "€20+";
+      filtro();
+    });
 
-  // Dëgjuesit
-  document.querySelectorAll(".filters input, .filters select, #f-rendit").forEach(function (el) {
-    el.addEventListener("change", filtro);
-  });
-  document.getElementById("f-cmim").addEventListener("input", function () {
-    document.getElementById("f-cmim-val").textContent = "€" + this.value + (this.value === "20" ? "+" : "");
-  });
-  document.querySelectorAll("[data-chip]").forEach(function (c) {
-    c.addEventListener("click", function () { selLenda.value = c.dataset.chip; filtro(); });
-  });
-  document.getElementById("pastro").addEventListener("click", function () {
-    document.querySelectorAll(".filters input[type=checkbox]").forEach(function (i) { i.checked = false; });
-    selLenda.value = "";
-    document.getElementById("f-cmim").value = 20;
-    document.getElementById("f-cmim-val").textContent = "€20+";
     filtro();
-  });
+  })();
 
-  filtro();
-})();
+});
 </script>
 </body>
 </html>

@@ -167,8 +167,27 @@ window.MesoDB = (function () {
     });
   }
 
+  /* ---------- Ngarkimi paraprak: zëvendëson të dhënat statike ---------- */
+  function ngarko() {
+    if (!online()) return Promise.resolve(false);
+    return Promise.all([mesuesit(), lendet()]).then(function (r) {
+      var m = r[0], l = r[1];
+      if (!m || !m.length || !l || !l.length) return false;
+      window.MESO_TUTORS = m;
+      // numri i mësuesve për lëndë llogaritet nga të dhënat reale
+      window.MESO_LENDET = l.map(function (x) {
+        x.numer = m.filter(function (t) { return t.lenda === x.key; }).length;
+        return x;
+      });
+      return true;
+    }).catch(function (e) {
+      console.warn("[meso.al] Leximi nga Supabase dështoi, po përdoren të dhënat lokale:", e.message);
+      return false;
+    });
+  }
+
   return {
-    online: online, klienti: klienti,
+    online: online, klienti: klienti, ngarko: ngarko,
     mesuesit: mesuesit, mesuesi: mesuesi, lendet: lendet,
     regjistrohu: regjistrohu, hyr: hyr, hyrMe: hyrMe, dil: dil,
     sesioni: sesioni, profiliIm: profiliIm,

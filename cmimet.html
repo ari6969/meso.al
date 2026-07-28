@@ -225,72 +225,76 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/db.js"></script>
 <script>
-(function () {
-  var cm = MesoUI.cmim;
-  var lista = MESO_TUTORS;
+MesoDB.ngarko().then(function () {
 
-  /* --- Statistika reale nga profilet --- */
-  var cmimet = lista.map(function (t) { return t.cmim; }).sort(function (a, b) { return a - b; });
-  var mes = cmimet.reduce(function (a, b) { return a + b; }, 0) / cmimet.length;
-  var stat = [
-    [cm(cmimet[0]), "çmimi më i ulët"],
-    [cm(Math.round(mes)), "mesatarja"],
-    [cm(cmimet[cmimet.length - 1]), "çmimi më i lartë"],
-    ["0", "tarifa nga platforma"]
-  ];
-  document.getElementById("stat-cmimet").innerHTML = stat.map(function (r) {
-    return '<div class="card center"><div class="price" style="color:var(--blue-600)">' + r[0] +
-           '</div><p class="small">' + r[1] + "</p></div>";
-  }).join("");
+  (function () {
+    var cm = MesoUI.cmim;
+    var lista = MESO_TUTORS;
 
-  /* --- Tabela sipas lëndës, nga çmimet e vendosura nga mësuesit --- */
-  document.getElementById("tab-cmime").innerHTML = MESO_LENDET.map(function (l) {
-    var m = lista.filter(function (t) { return t.lenda === l.key; });
-    if (!m.length) return "";
-    var c = m.map(function (t) { return t.cmim; }).sort(function (a, b) { return a - b; });
-    var mj = Math.round(c.reduce(function (a, b) { return a + b; }, 0) / c.length);
-    return '<tr style="border-top:1px solid var(--line)">' +
-      '<td style="padding:16px 22px;font-weight:650">' + l.ikona + " " + l.emer + "</td>" +
-      '<td style="padding:16px">' + cm(c[0]) + "</td>" +
-      '<td style="padding:16px"><b>' + cm(mj) + "</b></td>" +
-      '<td style="padding:16px">' + cm(c[c.length - 1]) + "</td>" +
-      '<td style="padding:16px"><a href="mesues.html?lenda=' + l.key + '">Shiko →</a></td></tr>';
-  }).join("");
-
-  /* --- Shembull i gjallë nga profili i një mësuesi --- */
-  var sel = document.getElementById("zgjidh-mesues");
-  sel.innerHTML = lista.map(function (t) {
-    return '<option value="' + t.id + '">' + t.emri + " — " + t.lendaEmer + "</option>";
-  }).join("");
-
-  function vizato() {
-    var t = lista.filter(function (x) { return x.id === sel.value; })[0];
-    var rreshta = [
-      ["1 mësim", t.cmim, 0],
-      ["5 mësime", t.cmim * 5, t.ulje.p5],
-      ["10 mësime", t.cmim * 10, t.ulje.p10],
-      ["20 mësime", t.cmim * 20, t.ulje.p20]
+    /* --- Statistika reale nga profilet --- */
+    var cmimet = lista.map(function (t) { return t.cmim; }).sort(function (a, b) { return a - b; });
+    var mes = cmimet.reduce(function (a, b) { return a + b; }, 0) / cmimet.length;
+    var stat = [
+      [cm(cmimet[0]), "çmimi më i ulët"],
+      [cm(Math.round(mes)), "mesatarja"],
+      [cm(cmimet[cmimet.length - 1]), "çmimi më i lartë"],
+      ["0", "tarifa nga platforma"]
     ];
-    document.getElementById("shembull-cmimi").innerHTML =
-      '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' +
-        '<div class="avatar ' + t.av + '">' + t.nofka + "</div>" +
-        "<div><b>" + t.emri + "</b><div class=\"small\">" + t.lendaEmer +
-        " · tarifë e vendosur nga mësuesi: <b>" + cm(t.cmim) + "</b> / 50 min</div></div></div>" +
-      rreshta.map(function (r) {
-        var fund = Math.round(r[1] * (100 - r[2]) / 100);
-        return '<div style="display:flex;justify-content:space-between;align-items:center;' +
-          'padding:11px 0;border-top:1px solid var(--line-2)">' +
-          "<span>" + r[0] + (r[2] ? ' <span class="badge badge-green">−' + r[2] + "%</span>" : "") + "</span>" +
-          "<b>" + cm(fund) + "</b></div>";
-      }).join("") +
-      (t.ulje.p5 || t.ulje.p10 || t.ulje.p20
-        ? ""
-        : '<p class="tiny" style="margin-top:12px">Ky mësues nuk ofron ulje për paketa.</p>');
-  }
+    document.getElementById("stat-cmimet").innerHTML = stat.map(function (r) {
+      return '<div class="card center"><div class="price" style="color:var(--blue-600)">' + r[0] +
+             '</div><p class="small">' + r[1] + "</p></div>";
+    }).join("");
 
-  sel.addEventListener("change", vizato);
-  vizato();
-})();
+    /* --- Tabela sipas lëndës, nga çmimet e vendosura nga mësuesit --- */
+    document.getElementById("tab-cmime").innerHTML = MESO_LENDET.map(function (l) {
+      var m = lista.filter(function (t) { return t.lenda === l.key; });
+      if (!m.length) return "";
+      var c = m.map(function (t) { return t.cmim; }).sort(function (a, b) { return a - b; });
+      var mj = Math.round(c.reduce(function (a, b) { return a + b; }, 0) / c.length);
+      return '<tr style="border-top:1px solid var(--line)">' +
+        '<td style="padding:16px 22px;font-weight:650">' + l.ikona + " " + l.emer + "</td>" +
+        '<td style="padding:16px">' + cm(c[0]) + "</td>" +
+        '<td style="padding:16px"><b>' + cm(mj) + "</b></td>" +
+        '<td style="padding:16px">' + cm(c[c.length - 1]) + "</td>" +
+        '<td style="padding:16px"><a href="mesues.html?lenda=' + l.key + '">Shiko →</a></td></tr>';
+    }).join("");
+
+    /* --- Shembull i gjallë nga profili i një mësuesi --- */
+    var sel = document.getElementById("zgjidh-mesues");
+    sel.innerHTML = lista.map(function (t) {
+      return '<option value="' + t.id + '">' + t.emri + " — " + t.lendaEmer + "</option>";
+    }).join("");
+
+    function vizato() {
+      var t = lista.filter(function (x) { return x.id === sel.value; })[0];
+      var rreshta = [
+        ["1 mësim", t.cmim, 0],
+        ["5 mësime", t.cmim * 5, t.ulje.p5],
+        ["10 mësime", t.cmim * 10, t.ulje.p10],
+        ["20 mësime", t.cmim * 20, t.ulje.p20]
+      ];
+      document.getElementById("shembull-cmimi").innerHTML =
+        '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' +
+          '<div class="avatar ' + t.av + '">' + t.nofka + "</div>" +
+          "<div><b>" + t.emri + "</b><div class=\"small\">" + t.lendaEmer +
+          " · tarifë e vendosur nga mësuesi: <b>" + cm(t.cmim) + "</b> / 50 min</div></div></div>" +
+        rreshta.map(function (r) {
+          var fund = Math.round(r[1] * (100 - r[2]) / 100);
+          return '<div style="display:flex;justify-content:space-between;align-items:center;' +
+            'padding:11px 0;border-top:1px solid var(--line-2)">' +
+            "<span>" + r[0] + (r[2] ? ' <span class="badge badge-green">−' + r[2] + "%</span>" : "") + "</span>" +
+            "<b>" + cm(fund) + "</b></div>";
+        }).join("") +
+        (t.ulje.p5 || t.ulje.p10 || t.ulje.p20
+          ? ""
+          : '<p class="tiny" style="margin-top:12px">Ky mësues nuk ofron ulje për paketa.</p>');
+    }
+
+    sel.addEventListener("change", vizato);
+    vizato();
+  })();
+
+});
 </script>
 </body>
 </html>

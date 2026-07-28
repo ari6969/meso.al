@@ -417,18 +417,22 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/db.js"></script>
 <script>
-  // Lëndët
-  document.getElementById("lendet-grid").innerHTML = window.MESO_LENDET.map(function (l) {
-    return '<a class="subject" href="mesues.html?lenda=' + l.key + '">' +
-      '<span class="ico">' + l.ikona + '</span>' +
-      '<span><b>' + l.emer + '</b><span>' + l.numer + ' mësues</span></span></a>';
-  }).join("");
+MesoDB.ngarko().then(function () {
 
-  // Mësuesit e zgjedhur (6 me vlerësimin më të lartë)
-  var top = window.MESO_TUTORS.slice().sort(function (a, b) {
-    return (b.rating - a.rating) || (b.komente - a.komente);
-  }).slice(0, 6);
-  document.getElementById("mesues-grid").innerHTML = top.map(window.MesoUI.kartëMini).join("");
+    // Lëndët
+    document.getElementById("lendet-grid").innerHTML = window.MESO_LENDET.map(function (l) {
+      return '<a class="subject" href="mesues.html?lenda=' + l.key + '">' +
+        '<span class="ico">' + l.ikona + '</span>' +
+        '<span><b>' + l.emer + '</b><span>' + l.numer + ' mësues</span></span></a>';
+    }).join("");
+
+    // Mësuesit e zgjedhur (6 me vlerësimin më të lartë)
+    var top = window.MESO_TUTORS.slice().sort(function (a, b) {
+      return (b.rating - a.rating) || (b.komente - a.komente);
+    }).slice(0, 6);
+    document.getElementById("mesues-grid").innerHTML = top.map(window.MesoUI.kartëMini).join("");
+
+});
 </script>
 </body>
 </html>
