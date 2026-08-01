@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=202607282217">
+<link rel="stylesheet" href="assets/css/style.css?v=202608011815">
 </head>
 <body>
 
@@ -149,10 +149,10 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="assets/js/config.js?v=202607282217"></script>
-<script src="assets/js/tutors.js?v=202607282217"></script>
-<script src="assets/js/main.js?v=202607282217"></script>
-<script src="assets/js/db.js?v=202607282217"></script>
+<script src="assets/js/config.js?v=202608011815"></script>
+<script src="assets/js/tutors.js?v=202608011815"></script>
+<script src="assets/js/main.js?v=202608011815"></script>
+<script src="assets/js/db.js?v=202608011815"></script>
 <style>@media(max-width:820px){#auth-grid{grid-template-columns:1fr !important;gap:32px !important}}</style>
 <script>
 document.querySelectorAll("[data-rol]").forEach(function (b) {
@@ -201,10 +201,8 @@ document.querySelectorAll("[data-rol]").forEach(function (b) {
         mbiemri: document.getElementById("r-mbiemri").value
       }
     ).then(function (r) {
-      if (r.error) throw r.error;
-      if (r.data.session) { location.href = "llogaria.html"; return; }
-      trego("Llogaria u krijua. Kontrollo emailin për ta konfirmuar adresën, pastaj hyr.");
-      btn.disabled = false; btn.textContent = "Krijo llogarinë falas";
+      if (r && r.error) throw r.error;
+      location.href = "llogaria.html";
     }).catch(function (err) {
       trego("Gabim: " + err.message, true);
       btn.disabled = false; btn.textContent = "Krijo llogarinë falas";

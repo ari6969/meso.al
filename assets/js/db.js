@@ -96,8 +96,24 @@ window.MesoDB = (function () {
   /* ---------- Autentifikimi ---------- */
   function regjistrohu(email, fjalekalim, tedhena) {
     if (!online()) return Promise.reject(new Error("demo"));
-    return klienti().auth.signUp({
-      email: email, password: fjalekalim, options: { data: tedhena || {} }
+    // Regjistrimi global është i çaktivizuar në këtë projekt Supabase, ndaj
+    // kalon përmes Edge Function-it që pranon vetëm kërkesa nga meso.al.
+    return fetch(cfg.SUPABASE_URL + "/functions/v1/regjistrohu", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email, password: fjalekalim,
+        emri: (tedhena || {}).emri, mbiemri: (tedhena || {}).mbiemri,
+        roli: (tedhena || {}).roli
+      })
+    }).then(function (r) {
+      return r.json().then(function (d) {
+        if (!r.ok) throw new Error(d.error || "Regjistrimi dështoi.");
+        return d;
+      });
+    }).then(function () {
+      // Llogaria u krijua — kyçe menjëherë përdoruesin.
+      return hyr(email, fjalekalim);
     });
   }
 
@@ -126,8 +142,15 @@ window.MesoDB = (function () {
 
   function profiliIm() {
     if (!online()) return Promise.resolve(null);
-    return klienti().from("profilet").select("*").limit(1).maybeSingle()
-      .then(function (r) { return r.data; });
+    // RLS lejon leximin e profileve të mësuesve aktivë, ndaj një .limit(1) i thjeshtë
+    // do të kthente profilin e dikujt tjetër. Duhet filtruar me user_id-në time.
+    return klienti().auth.getUser().then(function (u) {
+      var perdoruesi = u && u.data && u.data.user;
+      if (!perdoruesi) return null;
+      return klienti().from("profilet").select("*")
+        .eq("user_id", perdoruesi.id).maybeSingle()
+        .then(function (r) { return r.data; });
+    });
   }
 
   /* ---------- Rezervimet ---------- */
